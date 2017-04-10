@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'carousel.html.twig' %}
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h3>Welcome <span>to <strong>LHD VAN CENTRE</strong></span></h3>
+                </div>
+                {% image '@AppBundle/Resources/public/img/welcome_to_lhd.jpg' %}
+                <img src="{{ asset_url }}" alt="Welcome to LHD VAN CENTRE"/>
+                {% endimage %}
+                <div class="caption">
+                    <p>If you are looking for a quality <strong>LHD Van</strong> or <strong>MPV</strong>, you have come
+                        to the right place. We stock a wide selection of <strong>VW Transporter’s</strong>, <strong>Caravelle’s</strong>,
+                        <strong>Caddy’s</strong> and <strong>Multivan’s</strong>. All vehicles are imported from Germany
+                        and checked by our VW Technician before exporting into the UK.</p>
+                    <p>All our vehicles are ready to drive away. No need to wait weeks and go through the import
+                        process. Each van comes with V5C, 12 months MOT and UK plates (at no extra cost).</p>
+                    <p>Our stock is constantly changing. Please view our <a href="{{ path('stock') }}">STOCKLIST</a> for
+                        current models. <a href="{{ path('exchange') }}">Part Exchanges</a> welcome, including right
+                        hand drive.</p>
+                    <p><strong>VIEWING BY APPOINTMENT ONLY</strong></p>
+                    <p>07534 343480<br/>07903 436534</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h3>Click <span>the map below to find us</span></h3>
+                </div>
+                <a href="{{ path('location') }}">
+                    {% image '@AppBundle/Resources/public/img/click_the_map.jpg' %}
+                    <img src="{{ asset_url }}" alt="Click the map below to find us"/>
+                    {% endimage %}
+                </a>
+                <div class="caption">
+                    <p>These vehicles are perfect if you are planning a move from the UK to Europe, or you are a British
+                        living abroad. With all the necessary documents provided you can register the vehicle in any EU
+                        country.</p>
+                    <p><strong>HeathPark</strong></p>
+                    <p>
+                    <address>
+                        Main Road<br/>
+                        Cropthorne<br/>
+                        Pershore<br/>
+                        Worcestershire<br/>
+                        WR10 3NE
+                    </address>
+                    </p>
+                    <p><strong>Distance and travel time to:</strong></p>
+                    <p>
+                    <table>
+                        <tr>
+                            <th>Birmingham:</th>
+                            <td>39 miles</td>
+                            <td>1 hour</td>
+                        </tr>
+                        <tr>
+                            <th>Oxford:</th>
+                            <td>46 miles</td>
+                            <td>1 hour 20 minutes</td>
+                        </tr>
+                        <tr>
+                            <th>Bristol:</th>
+                            <td>59 miles</td>
+                            <td>1 hour 10 minutes</td>
+                        </tr>
+                        <tr>
+                            <th>London City Centre:</th>
+                            <td>104 miles</td>
+                            <td>2 hours 15 minutes</td>
+                        </tr>
+                        <tr>
+                            <th>M5 motorway:</th>
+                            <td>10 miles</td>
+                            <td>15 minutes</td>
+                        </tr>
+                    </table>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row newest-stock">
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <a href="{{ path('stock', {'slug': 'stock-1'}) }}" title="Stock 1">
+                    {% image '@AppBundle/Resources/public/img/fixture1.jpg' %}
+                    <img src="{{ asset_url }}" alt="Stock 1"/>
+                    {% endimage %}
+                </a>
+                <div class="caption">
+                    <h3>Stock 1</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <a href="{{ path('stock', {'slug': 'stock-3'}) }}" title="Stock 2">
+                    {% image '@AppBundle/Resources/public/img/fixture1.jpg' %}
+                    <img src="{{ asset_url }}" alt="Stock 1"/>
+                    {% endimage %}
+                </a>
+                <div class="caption">
+                    <h3>Stock 2</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <a href="{{ path('stock', {'slug': 'stock-3'}) }}" title="Stock 3">
+                    {% image '@AppBundle/Resources/public/img/fixture1.jpg' %}
+                    <img src="{{ asset_url }}" alt="Stock 1"/>
+                    {% endimage %}
+                </a>
+                <div class="caption">
+                    <h3>Stock 3</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,143 @@
+.navbar-default.red {
+    background-color: #ff0000;
+    border-color: #ff0000;
+    border-radius: 0;
+    margin-bottom: 75px;
+    margin-top: 75px;
+}
+
+.navbar-default.red .navbar-text {
+    color: #fff;
+}
+
+.navbar-default.red .navbar-header {
+    position: absolute;
+    top: -65px;
+}
+
+header .navbar-default.menu {
+    background-color: transparent;
+    border-width: 0;
+    margin-top: 20px;
+}
+
+header .navbar-collapse.menu {
+    padding: 0;
+}
+
+header .nav.navbar-nav > li > a {
+    color: #2e3192;
+    padding: 30px 15px 0px 10px;
+    font-size: 20px;
+    border: none;
+    border-radius: 0;
+    text-transform: uppercase;
+}
+
+header .nav.navbar-nav > li.active > a,
+header .nav.navbar-nav > li.active > a:focus,
+header .nav.navbar-nav > li.active > a:hover {
+    color: #ff0000;
+    cursor: default;
+    background-color: transparent;
+    border: none;
+    border-bottom-color: transparent;
+}
+
+header .navbar-default .navbar-nav > li > a:focus,
+header .navbar-default .navbar-nav > li > a:hover {
+    color: #2e3192;
+}
+
+.carousel-caption {
+    background-image: url('../img/slider_caption_bg.png');
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    padding-bottom: 20px;
+}
+
+.carousel-caption p {
+    font-size: 30px;
+    margin: 0;
+    text-shadow: 2px 2px black;
+}
+
+.thumbnail {
+    border: none;
+    padding: 0;
+}
+
+.thumbnail .caption {
+    padding-left: 0;
+}
+
+.thumbnail .caption h3,
+.thumbnail .caption table tr th {
+    color: #ff0000;
+}
+
+.thumbnail .caption p,
+.thumbnail .caption table,
+.thumbnail .caption address {
+    color: #2e3192;
+    font-size: 18px;
+}
+
+.thumbnail .caption h3 span {
+    color: #2e3192;
+}
+
+.thumbnail .caption table {
+    width: 100%;
+}
+
+.newest-stock .thumbnail {
+    position: relative;
+}
+
+.newest-stock .thumbnail .caption {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background: #ff0000;
+    padding: 0;
+}
+
+.newest-stock .thumbnail .caption h3 {
+    color: #fff;
+    margin-top: 10px;
+}
+
+footer .navbar-default {
+    background: #2e3192; /* Old browsers */
+    background: -moz-linear-gradient(top, #2383c5 0%, #2e3192 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #2383c5 0%, #2e3192 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #2383c5 0%, #2e3192 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2383c5', endColorstr='#2e3192', GradientType=0); /* IE6-9 */
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+    margin-top: 15px;
+}
+
+footer .navbar-default .navbar-nav > li > a {
+    color: #fff;
+}
+
+footer .navbar-default .navbar-nav > li > a:hover,
+footer .navbar-default .navbar-nav > .active > a,
+footer .navbar-default .navbar-nav > .active > a:focus,
+footer .navbar-default .navbar-nav > .active > a:hover {
+    color: #fff;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+    footer .navbar-nav > li > a {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+}

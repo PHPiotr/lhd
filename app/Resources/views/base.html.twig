@@ -1,13 +1,135 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="{% block description %}Komfortowe pokoje gościnne z widokiem na góry w Kościelisku obok Zakopanego{% endblock %}">
+    <title>{% block title %}LHD VAN CENTRE{% endblock %}</title>
+    {% block stylesheets %}
+        {% stylesheets
+        'css/bootstrap.css'
+        'css/custom.css'
+        filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+<header>
+
+    <nav class="navbar navbar-default red">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="{{ path('centre') }}" title="LHD Van Centre">
+                    {% image '@AppBundle/Resources/public/img/lhd_van_centre_logo.png' %}
+                    <img src="{{ asset_url }}" alt="LHD Van Centre" />
+                    {% endimage %}
+                </a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <p class="navbar-text">Viewing by appointment only:</p>
+                    </li>
+                    <li>
+                        <p class="navbar-text">07903 436534</p>
+                    </li>
+                    <li>
+                        <p class="navbar-text">07534 343480</p>
+                    </li>
+                    <li>
+                        <p class="navbar-text">sales@lhdvancentre.co.uk</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-default menu">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-left">
+                    <li{% if app.request.attributes.get('_route') starts with 'centre' %} class="active"{% endif %}>
+                        <a href="{{ path('centre') }}">Van centre</a>
+                    </li>
+                    <li{% if app.request.attributes.get('_route') starts with 'stock' %} class="active"{% endif %}>
+                        <a href="{{ path('stock') }}">Stock</a>
+                    </li>
+                    <li{% if app.request.attributes.get('_route') starts with 'exchange' %} class="active"{% endif %}>
+                        <a href="{{ path('exchange') }}">Part exchange</a>
+                    </li>
+                    <li{% if app.request.attributes.get('_route') starts with 'types' %} class="active"{% endif %}>
+                        <a href="{{ path('types') }}">Van/MPV types</a>
+                    </li>
+                    <li{% if app.request.attributes.get('_route') starts with 'location' %} class="active"{% endif %}>
+                        <a href="{{ path('location') }}">Location</a>
+                    </li>
+                    <li{% if app.request.attributes.get('_route') starts with 'contact' %} class="active"{% endif %}>
+                        <a href="{{ path('contact') }}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    {% block body %}{% endblock %}
+</div>
+<footer>
+    <nav class="navbar navbar-default menu">
+        <div class="container">
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li{% if app.request.attributes.get('_route') starts with 'centre' %} class="active"{% endif %}>
+                        <a href="{{ path('centre') }}">Van centre</a>
+                    </li>
+                    <li{% if app.request.attributes.get('_route') starts with 'stock' %} class="active"{% endif %}>
+                        <a href="{{ path('stock') }}">Stock</a>
+                    </li>
+                    <li{% if app.request.attributes.get('_route') starts with 'exchange' %} class="active"{% endif %}>
+                        <a href="{{ path('exchange') }}">Part exchange</a>
+                    </li>
+                    <li{% if app.request.attributes.get('_route') starts with 'types' %} class="active"{% endif %}>
+                        <a href="{{ path('types') }}">Van/MPV types</a>
+                    </li>
+                    <li{% if app.request.attributes.get('_route') starts with 'location' %} class="active"{% endif %}>
+                        <a href="{{ path('location') }}">Location</a>
+                    </li>
+                    <li{% if app.request.attributes.get('_route') starts with 'contact' %} class="active"{% endif %}>
+                        <a href="{{ path('contact') }}">Contact</a>
+                    </li>
+                </ul>
+                <ul <ul class="nav navbar-nav navbar-right">>
+                    <li{% if app.request.attributes.get('_route') starts with 'sitemap' %} class="active"{% endif %}>
+                        <a href="#">Sitemap</a>
+                    </li>
+                    <li{% if app.request.attributes.get('_route') starts with 'stock' %} class="active"{% endif %}>
+                        <a href="#">Go to top</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</footer>
+{% block javascripts %}
+    {% javascripts
+    '@AppBundle/Resources/public/js/jquery.js'
+    '@AppBundle/Resources/public/js/bootstrap.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+<script>
+//TODO: Google analytics
+</script>
+</body>
 </html>
