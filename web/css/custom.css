@@ -135,9 +135,95 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     text-decoration: underline;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 991px) {
+    header .nav.navbar-nav > li > a {
+        padding-right: 10px;
+        font-size: 16px;
+    }
+    .nav > li > a {
+        padding: 0px 5px;
+    }
+    .thumbnail .caption h3 span {
+        display: block;
+    }
+    .carousel-caption p {
+        font-size: 15px;
+    }
+    .red .navbar-text.first {
+        display: none;
+        visibility: hidden;
+    }
     footer .navbar-nav > li > a {
-        padding-top: 30px;
-        padding-bottom: 30px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+@media (max-width: 767px) {
+    .navbar-toggle {
+        float: left;
+        margin-left: 15px;
+    }
+    .navbar-default.red {
+        background-color: transparent;
+        border-color: transparent;
+        margin-bottom: 10px;
+        margin-top: 30px;
+    }
+    .navbar-default.red .navbar-header {
+        position: relative;
+        top: 0;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .red .navbar-nav {
+        float: none;
+        background: #ff0000;
+        margin: 30px auto 0;
+        text-align: center;
+    }
+    .red .nav > li {
+        display: inline-block;
+        padding: 0 10px;
+    }
+    .carousel-caption p {
+        font-size: 15px;
+    }
+    .thumbnail .caption h3 {
+        text-align: center;
+    }
+    .thumbnail > img, .thumbnail a > img {
+        width: 100%;
+    }
+    footer .collapse {
+        display: block;
+    }
+    footer .nav > li {
+        display: inline-block;
+    }
+    footer .navbar-nav {
+        margin: 7.5px 0px;
+        float: left;
+    }
+    footer .navbar-nav.navbar-right {
+        float: right;
+    }
+    footer .nav > li > a {
+        padding: 10px 5px;
+    }
+}
+
+@media (max-width: 650px) {
+    .red .nav > li {
+        padding: 0 5px;
+    }
+    .red .navbar-text.first {
+        display: none;
+        visibility: hidden;
+    }
+    footer .nav > li {
+        display: block;
+    }
+    footer .navbar-nav.navbar-right li {
+        text-align: right;
     }
 }
