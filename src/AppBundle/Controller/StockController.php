@@ -18,4 +18,21 @@ class StockController extends Controller
         return [];
     }
 
+    /**
+     * @Route("/admin/stock", name="admin_stock_list")
+     * @Template()
+     */
+    public function adminListAction()
+    {
+        return [];
+    }
+    /**
+     * @Route("/admin/stock/add", name="admin_stock_add")
+     * @Template()
+     */
+    public function adminAddAction()
+    {
+        return [];
+    }
+
 }
