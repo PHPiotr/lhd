@@ -1,2 +1,5 @@
 {% extends 'auth_base.html.twig' %}
 {% block title %}{{ parent() }} - Stock - Add{% endblock %}
+{%  block body %}
+    {{ form(form, {'attr': {'action': path('admin_stock_add'), 'novalidate': 'novalidate'}}) }}
+{% endblock %}

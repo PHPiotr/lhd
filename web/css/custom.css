@@ -1,3 +1,7 @@
+body {
+    color: #2e3192;
+}
+
 .navbar-default.red {
     background-color: #ff0000;
     border-color: #ff0000;
@@ -49,6 +53,22 @@ header .navbar-default .navbar-nav > li > a:hover {
     color: #2e3192;
 }
 
+.specification table,
+.carousel img {
+    width: 100%;
+}
+
+.specification table th {
+    text-transform: uppercase;
+}
+.specification .table-bordered > tbody > tr > th, .specification .table-bordered > tbody > tr > td {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #2e3192;
+    color: #2e3192;
+    font-size: 20px;
+}
+
 .carousel-caption {
     background-image: url('../img/slider_caption_bg.png');
     width: 100%;
@@ -72,11 +92,13 @@ header .navbar-default .navbar-nav > li > a:hover {
     padding-left: 0;
 }
 
+h2,
 .thumbnail .caption h3,
 .thumbnail .caption table tr th {
     color: #ff0000;
 }
 
+p,
 .thumbnail .caption p,
 .thumbnail .caption table,
 .thumbnail .caption address {
@@ -84,12 +106,34 @@ header .navbar-default .navbar-nav > li > a:hover {
     font-size: 18px;
 }
 
+.stock-view h1,
+.specification table.
+.thumbnail h2,
 .thumbnail .caption h3 span {
     color: #2e3192;
 }
 
 .thumbnail .caption table {
     width: 100%;
+}
+
+.btn-danger {
+    background-color: #ff0000;
+    border-color: #ff0000;
+    border-radius: 0;
+    margin-top: 20px;
+}
+
+.stock .thumbnail .caption {
+    padding: 0;
+}
+
+.stock .thumbnail .caption p {
+    margin: 0;
+}
+
+.stock .thumbnail .caption .row div {
+    margin-top: 10px;
 }
 
 .newest-stock .thumbnail {
@@ -108,6 +152,10 @@ header .navbar-default .navbar-nav > li > a:hover {
 .newest-stock .thumbnail .caption h3 {
     color: #fff;
     margin-top: 10px;
+}
+
+.stock-view {
+    margin-bottom: 30px;
 }
 
 footer .navbar-default {

@@ -1,0 +1,15 @@
+body:after {
+    content: url('../img/lightbox/close.png') url('../img/lightbox/loading.gif') url('../img/lightbox/prev.png') url('../img/lightbox/next.png');
+}
+.lb-cancel {
+    background: url('../img/lightbox/loading.gif') no-repeat;
+}
+.lb-nav a.lb-prev {
+    background: url('../img/lightbox/prev.png') left 48% no-repeat;
+}
+.lb-nav a.lb-next {
+    background: url('../img/lightbox/next.png') right 48% no-repeat;
+}
+.lb-data .lb-close {
+    background: url('../img/lightbox/close.png') top right no-repeat;
+}

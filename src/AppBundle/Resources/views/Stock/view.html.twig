@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }} - Stock - {{ car.title }}
+{% endblock %}
+{% block stylesheets %}
+    {% stylesheets
+    'css/bootstrap.min.css'
+    'css/lightbox.css'
+    'css/custom.css'
+    'css/custom_lightbox.css'
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+{% block body %}
+    <div class="row stock-view">
+        <h1>{{ car.title }}</h1>
+        <h2>Price: <strong>£{{ car.price }}</strong></h2>
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                {% for photo in car.getCarPhotos() %}
+                    <div class="item {% if loop.first %}active{% endif %}">
+                        <img src="{{ asset('bundles/app/img/stock/thumbnails/carousel/' ~ photo.name) }}"
+                             alt="{{ car.title ~ ' - ' ~ photo.name }}"/>
+                    </div>
+                {% endfor %}
+            </div>
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        {% for photo in car.getCarPhotos() %}
+            <div class="col-sm-4 col-md-4">
+                <div class="thumbnail">
+                    <a data-lightbox="{{ car.slug }}" href="{{ asset('bundles/app/img/stock/' ~ photo.name) }}">
+                        <img src="{{ asset('bundles/app/img/stock/thumbnails/medium/' ~ photo.name) }}"
+                             alt="{{ car.title ~ ' - ' ~ photo.name }}"/>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <p>{{ car.description }}</p>
+    </div>
+    <div class="row specification">
+        <h2>Specification</h2>
+        <table class="table-bordered">
+            {% for prop in specification %}
+                <tr>
+                    <th>{{ prop }}</th>
+                    <td>{{ car.getValueForKey(prop) }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <a href="{{ path('contact') }}" class="btn-danger btn-block btn">Book appointment</a>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {% javascripts
+    '@AppBundle/Resources/public/js/jquery.js'
+    '@AppBundle/Resources/public/js/bootstrap.js'
+    '@AppBundle/Resources/public/js/lightbox.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
