@@ -1,0 +1,11 @@
+{% if pagesCount > 1 %}
+    <div class="row row-pagination">
+        <ul class="pagination">
+            {% for page in 1..pagesCount %}
+                <li{% if currentPage == page %} class="active"{% endif %}>
+                    <a href="{{ path('stock', {'page': page}) }}">{{ page }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

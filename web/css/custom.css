@@ -177,6 +177,26 @@ p,
     margin-top: 10px;
 }
 
+.stock .row-pagination.row {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.stock .pagination {
+    margin: 40px 0 0;
+}
+
+.stock .pagination > .active > a {
+    background-color: #ff0000;
+    border-color: #ddd;
+}
+
+.stock .pagination > li > a {
+    color: #fff;
+    background-color: #2e3192;
+    border: 1px solid #ddd;
+}
+
 .newest-stock .thumbnail {
     position: relative;
 }
@@ -216,7 +236,7 @@ footer .navbar-default {
     border: none;
     border-radius: 0;
     margin-bottom: 0;
-    margin-top: 15px;
+    margin-top: 50px;
 }
 
 footer .navbar-default .navbar-nav > li > a {

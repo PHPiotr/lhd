@@ -5,54 +5,60 @@
 {% block body %}
     <div class="stock">
 
-            {% for car in cars %}
-                {% if loop.index is odd %}
-                    <div class="row list">
-                {% endif %}
-                <div class="col-sm-6 col-md-6">
-                    <div class="thumbnail">
-                        <div class="thumbnail-inner">
-                            {% set break = false %}
-                            {% for photo in car.getCarPhotos() if not break %}
-                                <a href="{{ path('stock_view', {'slug': car.slug}) }}" title="{{ car.title }}">
-                                    <img src="{{ asset('bundles/app/img/stock/thumbnails/big/'~photo.name) }}"
-                                         alt="{{ car.title ~ ' ' ~ photo.name }}"/>
-                                </a>
-                                {% set break = true %}
-                            {% endfor %}
-                            {% if car.isSold %}
-                                <div class="sold"><strong>Sold</strong></div>
-                            {% elseif car.isReserved %}
-                                <div class="reserved"><strong>Reserved</strong></div>
-                            {% endif %}
-                        </div>
-                        <div class="caption">
-                            <h2>{{ car.title | truncate(25, true) }}</h2>
-                            <h3{% if car.isSold %} class="sold"{% endif %}>Price: £{{ car.price|number_format(0, '.', ',') }}</h3>
-                            <div class="row">
-                                <div class="col-sm-6 col-md-6">
-                                    <p><strong>First registration</strong></p>
-                                    <p><strong>Mileage</strong></p>
-                                    <p><strong>MOT</strong></p>
-                                    <a class="btn btn-danger btn-block"
-                                       href="{{ path('stock_view', {'slug': car.slug}) }}">See all details</a>
-                                </div>
-                                <div class="col-sm-6 col-md-6">
-                                    <p>{{ car.firstRegistration }}</p>
-                                    <p>{{ car.mileage }}</p>
-                                    <p>{{ car.mot }}</p>
-                                    <a class="btn btn-danger btn-block" href="{{ path('contact') }}">Book
-                                        appointment</a>
-                                </div>
+        {% include 'pagination.html.twig' with {'pagesCount': pagesCount, 'currentPage': currentPage} %}
+
+        {% for car in cars %}
+
+            {% if loop.index is odd %}
+                <div class="row list">
+            {% endif %}
+            <div class="col-sm-6 col-md-6">
+                <div class="thumbnail">
+                    <div class="thumbnail-inner">
+                        {% set break = false %}
+                        {% for photo in car.getCarPhotos() if not break %}
+                            <a href="{{ path('stock_view', {'slug': car.slug}) }}" title="{{ car.title }}">
+                                <img src="{{ asset('bundles/app/img/stock/thumbnails/big/'~photo.name) }}"
+                                     alt="{{ car.title ~ ' ' ~ photo.name }}"/>
+                            </a>
+                            {% set break = true %}
+                        {% endfor %}
+                        {% if car.isSold %}
+                            <div class="sold"><strong>Sold</strong></div>
+                        {% elseif car.isReserved %}
+                            <div class="reserved"><strong>Reserved</strong></div>
+                        {% endif %}
+                    </div>
+                    <div class="caption">
+                        <h2>{{ car.title | truncate(25, true) }}</h2>
+                        <h3{% if car.isSold %} class="sold"{% endif %}>Price:
+                            £{{ car.price|number_format(0, '.', ',') }}</h3>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <p><strong>First registration</strong></p>
+                                <p><strong>Mileage</strong></p>
+                                <p><strong>MOT</strong></p>
+                                <a class="btn btn-danger btn-block"
+                                   href="{{ path('stock_view', {'slug': car.slug}) }}">See all details</a>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <p>{{ car.firstRegistration }}</p>
+                                <p>{{ car.mileage }}</p>
+                                <p>{{ car.mot }}</p>
+                                <a class="btn btn-danger btn-block" href="{{ path('contact') }}">Book
+                                    appointment</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                {% if loop.index is even or loop.last %}
-                    </div>
-                {% endif %}
-            {% else %}
-                <h1>Nothing in stock yet</h1>
-            {% endfor %}
+            </div>
+            {% if loop.index is even or loop.last %}
+                </div>
+            {% endif %}
+        {% else %}
+            <h1>Nothing in stock yet</h1>
+        {% endfor %}
+
+        {% include 'pagination.html.twig' with {'pagesCount': pagesCount, 'currentPage': currentPage} %}
     </div>
 {% endblock %}

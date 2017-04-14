@@ -31,9 +31,17 @@ class StockController extends Controller
      */
     public function indexAction($page)
     {
-        $cars = $this->getDoctrine()->getRepository('AppBundle:Car')->findBy([], ['id' => 'DESC'], 6, 6 * ($page - 1));
+        $perPage = 6;
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Car');
+        $cars = $repo->findBy([], ['isSold' => 'ASC', 'id' => 'DESC'], $perPage, $perPage * ($page - 1));
+        $countAll = $repo->getCountAll();
+        $pagesCount = $countAll > 0 ? ceil($countAll / $perPage) : 1;
 
-        return ['cars' => $cars];
+        if ($page > $pagesCount) {
+            $page = $pagesCount;
+        }
+
+        return ['cars' => $cars, 'currentPage' => $page, 'pagesCount' => $pagesCount];
     }
 
     /**
@@ -82,12 +90,19 @@ class StockController extends Controller
             return ['car' => $car, 'form' => $form->createView()];
         }
 
-        $car->setSlug(Sluggable\Urlizer::urlize($car->getTitle()));
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
-        $this->addFlash('success', 'Your car was edited!');
+        try {
+            if (true !== $this->addCarPhotosIfNeeded($request, $car, new Filesystem())) {
+                throw new \Exception('File upload failed!');
+            }
+            $car->setSlug(Sluggable\Urlizer::urlize($car->getTitle()));
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $this->addFlash('success', 'Your car was edited!');
+        } catch (\Exception $e) {
+            $this->addFlash('danger', $e->getMessage());
+            return ['car' => $car, 'form' => $form->createView()];
+        }
 
-        $this->addCarPhotosIfNeeded($request, $car, new Filesystem());
         return $this->redirectToRoute('admin_stock_edit', ['id' => $car->getId()]);
     }
 
@@ -151,10 +166,16 @@ class StockController extends Controller
         $car->setSlug(Sluggable\Urlizer::urlize($car->getTitle()));
         $em = $this->getDoctrine()->getManager();
         $em->persist($car);
+
+        try {
+            if (true !== $this->addCarPhotosIfNeeded($request, $car, new Filesystem())) {
+                throw new \Exception('File upload failed!');
+            }
+        } catch (\Exception $e) {
+            return ['form' => $form->createView()];
+        }
         $em->flush();
         $this->addFlash('success', 'Your car was added to stock!');
-
-        $this->addCarPhotosIfNeeded($request, $car, new Filesystem());
 
         return $this->redirectToRoute('admin_stock_list');
     }
@@ -199,48 +220,65 @@ class StockController extends Controller
         $files = $request->files->all();
 
         if (!isset($files['car']['carPhotos'])) {
-            return;
+            return true;
         }
         $carPhotos = $files['car']['carPhotos'];
         if ($carPhotos[0] === null) {
-            return;
+            return true;
         }
         $carPhotosDirectory = $this->carPhotosDirectory;
 
+        $em = $this->getDoctrine()->getManager();
+        $imgAdded = [];
+        $error = null;
+        $thumbnail = $this->get('app.utils.thumbnail');
+
         foreach ($carPhotos as $uploadedFile) {
+
             $carPhoto = new CarPhoto();
             $clientOriginalName = $uploadedFile->getClientOriginalName();
             $filename = pathinfo($clientOriginalName, PATHINFO_FILENAME);
             $extension = pathinfo($clientOriginalName, PATHINFO_EXTENSION);
-            $sluggedFilename = sprintf('%s-%s', Sluggable\Urlizer::urlize($filename), md5(time().rand(0, 1000)));
+            $sluggedFilename = sprintf('%s-%s', Sluggable\Urlizer::urlize($filename), md5(time() . rand(0, 1000)));
             $sluggedName = strtolower(sprintf('%s.%s', $sluggedFilename, $extension));
-            $uploadedFile->move($carPhotosDirectory, $sluggedName);
-            $thumbnailCarousel = $carPhotosDirectory . 'thumbnails/carousel/' . $sluggedName;
-            $thumbnailBig = $carPhotosDirectory . 'thumbnails/big/' . $sluggedName;
-            $thumbnailMedium = $carPhotosDirectory . 'thumbnails/medium/' . $sluggedName;
-            $thumbnail = $this->get('app.utils.thumbnail');
-            try {
-                $fs->copy($carPhotosDirectory . $sluggedName, $thumbnailCarousel);
-                $thumbnail->create($thumbnailCarousel, 'carousel_thumb_out');
-                $fs->copy($carPhotosDirectory . $sluggedName, $thumbnailBig);
-                $thumbnail->create($thumbnailBig, 'big_thumb_out');
-                $fs->copy($carPhotosDirectory . $sluggedName, $thumbnailMedium);
-                $thumbnail->create($thumbnailMedium, 'medium_thumb_out');
-            } catch (Exception $e) {
-                $fs->remove([
-                    $carPhotosDirectory . $sluggedName,
-                    $thumbnailCarousel,
-                    $thumbnailBig,
-                    $thumbnailMedium,
-                ]);
-                throw $e;
-            }
-            $em = $this->getDoctrine()->getManager();
+
             $carPhoto->setCar($car);
             $carPhoto->setName($sluggedName);
             $em->persist($carPhoto);
-            $em->flush();
+
+            $original = $carPhotosDirectory . $sluggedName;
+            $thumbnailCarousel = $carPhotosDirectory . 'thumbnails/carousel/' . $sluggedName;
+            $thumbnailBig = $carPhotosDirectory . 'thumbnails/big/' . $sluggedName;
+            $thumbnailMedium = $carPhotosDirectory . 'thumbnails/medium/' . $sluggedName;
+
+            try {
+                $uploadedFile->move($carPhotosDirectory, $sluggedName);
+                $imgAdded[] = $original;
+                $fs->copy($carPhotosDirectory . $sluggedName, $thumbnailCarousel);
+                $imgAdded[] = $thumbnailCarousel;
+                $thumbnail->create($thumbnailCarousel, 'carousel_thumb_out');
+                $fs->copy($carPhotosDirectory . $sluggedName, $thumbnailBig);
+                $imgAdded[] = $thumbnailBig;
+                $thumbnail->create($thumbnailBig, 'big_thumb_out');
+                $fs->copy($carPhotosDirectory . $sluggedName, $thumbnailMedium);
+                $imgAdded[] = $thumbnailMedium;
+                $thumbnail->create($thumbnailMedium, 'medium_thumb_out');
+            } catch (\Exception $e) {
+                $error = $e->getMessage();
+                break;
+            }
         }
+        if (!$error) {
+            $this->addFlash('success', 'Photos added to car!');
+            $em->flush();
+
+            return true;
+        }
+
+        $this->addFlash('danger', $error);
+        $fs->remove($imgAdded);
+
+        return false;
     }
 
     protected function deleteCarPhotosIfNeeded(Car $car, array $selectedPhotos = [])
@@ -270,9 +308,10 @@ class StockController extends Controller
             $thumbnailMedium = $carPhotosDirectory . 'thumbnails/medium/' . $name;
             $imgRemove += [$original, $thumbnailCarousel, $thumbnailBig, $thumbnailMedium];
         }
-        $em->flush();
+
         try {
             $fs->remove($imgRemove);
+            $em->flush();
         } catch (IOException $e) {
             $this->addFlash('warning', $e->getMessage());
         }
