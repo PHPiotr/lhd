@@ -24,7 +24,7 @@
                             {% endif %}
                         </div>
                         <div class="caption">
-                            <h2>{{ car.title }}</h2>
+                            <h2>{{ car.title | truncate(25, true) }}</h2>
                             <h3{% if car.isSold %} class="sold"{% endif %}>Price: £{{ car.price|number_format(0, '.', ',') }}</h3>
                             <div class="row">
                                 <div class="col-sm-6 col-md-6">

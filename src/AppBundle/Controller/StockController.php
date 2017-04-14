@@ -202,7 +202,7 @@ class StockController extends Controller
             return;
         }
         $carPhotos = $files['car']['carPhotos'];
-        if (!$carPhotos) {
+        if ($carPhotos[0] === null) {
             return;
         }
         $carPhotosDirectory = $this->carPhotosDirectory;
