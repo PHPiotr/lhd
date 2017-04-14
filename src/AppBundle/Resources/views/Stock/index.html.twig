@@ -4,8 +4,11 @@
 {% endblock %}
 {% block body %}
     <div class="stock">
-        <div class="row">
+
             {% for car in cars %}
+                {% if loop.index is odd %}
+                    <div class="row list">
+                {% endif %}
                 <div class="col-sm-6 col-md-6">
                     <div class="thumbnail">
                         <div class="thumbnail-inner">
@@ -45,9 +48,11 @@
                         </div>
                     </div>
                 </div>
+                {% if loop.index is even or loop.last %}
+                    </div>
+                {% endif %}
             {% else %}
                 <h1>Nothing in stock yet</h1>
             {% endfor %}
-        </div>
     </div>
 {% endblock %}

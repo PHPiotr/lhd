@@ -73,6 +73,10 @@ header .navbar-default .navbar-nav > li > a:hover {
     background-color: #ff0000;
 }
 
+.stock .row.list {
+    margin-top: 50px;
+}
+
 .specification table,
 .carousel img {
     width: 100%;

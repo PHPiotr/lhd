@@ -13,7 +13,7 @@
                             {% set break = true %}
                         {% endfor %}
                         <div class="caption">
-                            <h2>{{ car.title }}</h2>
+                            <h2>{{ car.title | truncate(10, true) }}</h2>
                             <div class="row">
                                 <div class="col-sm-4 col-md-4">
                                     <a class="btn btn-primary btn-block"
