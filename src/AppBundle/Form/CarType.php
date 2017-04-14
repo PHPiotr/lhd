@@ -38,6 +38,7 @@ class CarType extends AbstractType
             ->add('mpgCombined')
             ->add('length')
             ->add('width')
+            ->add('height')
             ->add('countryOfOrigin')
             ->add('carPhotos', FileType::class, array(
                 'multiple' => true,

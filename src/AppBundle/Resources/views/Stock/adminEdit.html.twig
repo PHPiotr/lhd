@@ -1,0 +1,13 @@
+{% extends 'auth_base.html.twig' %}
+{% block title %}{{ parent() }} - Stock - Edit - {{ car.title }}{% endblock %}
+{%  block body %}
+    <h1>Edit car: {{ car.title }}</h1>
+    <div class="well">
+        <ul class="nav nav-pills">
+            <li role="presentation">
+                <a href="{{ path('admin_stock_car_photos', {'id': car.id}) }}">Delete photos of this car</a>
+            </li>
+        </ul>
+    </div>
+    {{ form(form, {'attr': {'action': path('admin_stock_edit', {'id': car.id}), 'novalidate': 'novalidate'}}) }}
+{% endblock %}

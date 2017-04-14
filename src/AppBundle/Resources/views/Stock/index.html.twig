@@ -8,17 +8,24 @@
             {% for car in cars %}
                 <div class="col-sm-6 col-md-6">
                     <div class="thumbnail">
-                        {% set break = false %}
-                        {% for photo in car.getCarPhotos() if not break %}
-                            <a href="{{ path('stock_view', {'slug': car.slug}) }}" title="{{ car.title }}">
-                                <img src="{{ asset('bundles/app/img/stock/thumbnails/big/'~photo.name) }}"
-                                     alt="{{ car.title ~ ' ' ~ photo.name }}"/>
-                            </a>
-                            {% set break = true %}
-                        {% endfor %}
+                        <div class="thumbnail-inner">
+                            {% set break = false %}
+                            {% for photo in car.getCarPhotos() if not break %}
+                                <a href="{{ path('stock_view', {'slug': car.slug}) }}" title="{{ car.title }}">
+                                    <img src="{{ asset('bundles/app/img/stock/thumbnails/big/'~photo.name) }}"
+                                         alt="{{ car.title ~ ' ' ~ photo.name }}"/>
+                                </a>
+                                {% set break = true %}
+                            {% endfor %}
+                            {% if car.isSold %}
+                                <div class="sold"><strong>Sold</strong></div>
+                            {% elseif car.isReserved %}
+                                <div class="reserved"><strong>Reserved</strong></div>
+                            {% endif %}
+                        </div>
                         <div class="caption">
                             <h2>{{ car.title }}</h2>
-                            <h3>Price: £{{ car.price }}</h3>
+                            <h3{% if car.isSold %} class="sold"{% endif %}>Price: £{{ car.price|number_format(0, '.', ',') }}</h3>
                             <div class="row">
                                 <div class="col-sm-6 col-md-6">
                                     <p><strong>First registration</strong></p>

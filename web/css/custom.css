@@ -48,9 +48,29 @@ header .nav.navbar-nav > li.active > a:hover {
     border-bottom-color: transparent;
 }
 
+.stock .row .thumbnail .caption h2,
 header .navbar-default .navbar-nav > li > a:focus,
 header .navbar-default .navbar-nav > li > a:hover {
     color: #2e3192;
+}
+
+.stock .thumbnail-inner {
+    position: relative;
+}
+
+.stock .thumbnail-inner div.reserved, .stock .thumbnail-inner div.sold {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 30px;
+    background-color: #2e3192;
+}
+
+.stock .thumbnail-inner div.sold {
+    background-color: #ff0000;
 }
 
 .specification table,
@@ -81,6 +101,19 @@ header .navbar-default .navbar-nav > li > a:hover {
     font-size: 30px;
     margin: 0;
     text-shadow: 2px 2px black;
+    color: #fff;
+}
+
+.stock-view .carousel-caption.sold {
+    background: #ff0000;
+    background-image: none;
+}
+.stock-view .carousel-caption.reserved {
+    background: #2e3192;
+}
+
+.stock-view .carousel-caption p {
+    text-transform: uppercase;
 }
 
 .thumbnail {
@@ -93,9 +126,13 @@ header .navbar-default .navbar-nav > li > a:hover {
 }
 
 h2,
-.thumbnail .caption h3,
+.row .col-sm-6 .thumbnail .caption h3,
 .thumbnail .caption table tr th {
     color: #ff0000;
+}
+
+h2.sold, h3.sold {
+    text-decoration: line-through;
 }
 
 p,
@@ -106,10 +143,10 @@ p,
     font-size: 18px;
 }
 
+.stock .row .thumbnail .caption h2,
 .stock-view h1,
 .specification table.
-.thumbnail h2,
-.thumbnail .caption h3 span {
+.thumbnail h2 {
     color: #2e3192;
 }
 
@@ -140,13 +177,21 @@ p,
     position: relative;
 }
 
-.newest-stock .thumbnail .caption {
+.row.newest-stock .thumbnail .caption {
     position: absolute;
     bottom: 0;
     width: 100%;
     text-align: center;
     background: #ff0000;
     padding: 0;
+}
+
+.newest-stock.row .col-sm-6.col-md-4 .thumbnail .caption h3 {
+    color: #fff;
+}
+
+.row .col-sm-6 .thumbnail .caption h3 span {
+    color: #2e3192;
 }
 
 .newest-stock .thumbnail .caption h3 {

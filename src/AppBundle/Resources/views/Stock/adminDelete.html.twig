@@ -1,0 +1,5 @@
+{% extends 'auth_base.html.twig' %}
+{% block title %}{{ parent() }} - Stock - Delete - {{ car.title }}{% endblock %}
+{%  block body %}
+    {{ form(form, {'attr': {'action': path('admin_stock_delete', {'id': car.id}), 'novalidate': 'novalidate'}}) }}
+{% endblock %}

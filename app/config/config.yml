@@ -91,12 +91,12 @@ liip_imagine:
         carousel_thumb_out:
             quality: 75
             filters:
-                thumbnail: { size: [1140, 700], mode: outbound }
+                thumbnail: { size: [1140, 700], mode: outbound, allow_upscale: true }
         big_thumb_out:
             quality: 75
             filters:
-                thumbnail: { size: [567, 369], mode: outbound }
+                thumbnail: { size: [567, 369], mode: outbound, allow_upscale: true }
         medium_thumb_out:
             quality: 75
             filters:
-                thumbnail: { size: [400, 300], mode: outbound }
+                thumbnail: { size: [400, 300], mode: outbound, allow_upscale: true }

@@ -1,2 +1,39 @@
 {% extends 'auth_base.html.twig' %}
 {% block title %}{{ parent() }} - Stock - List{% endblock %}
+{% block body %}
+    <div class="stock">
+        <div class="row">
+            {% for car in cars %}
+                <div class="col-sm-4 col-md-4">
+                    <div class="thumbnail">
+                        {% set break = false %}
+                        {% for photo in car.getCarPhotos() if not break %}
+                            <img src="{{ asset('bundles/app/img/stock/thumbnails/medium/'~photo.name) }}"
+                                 alt="{{ car.title ~ ' ' ~ photo.name }}"/>
+                            {% set break = true %}
+                        {% endfor %}
+                        <div class="caption">
+                            <h2>{{ car.title }}</h2>
+                            <div class="row">
+                                <div class="col-sm-4 col-md-4">
+                                    <a class="btn btn-primary btn-block"
+                                       href="{{ path('admin_stock_edit', {'id': car.id}) }}">Edit</a>
+                                </div>
+                                <div class="col-sm-4 col-md-4">
+                                    <a class="btn btn-success btn-block"
+                                       href="{{ path('admin_stock_car_photos', {'id': car.id}) }}">Photos</a>
+                                </div>
+                                <div class="col-sm-4 col-md-4">
+                                    <a class="btn btn-danger btn-block"
+                                       href="{{ path('admin_stock_delete', {'id': car.id}) }}">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <h1>Nothing in stock yet</h1>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -2,11 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Form\CarType;
+use AppBundle\Form\CarDeleteType;
 use AppBundle\Entity\Car;
 use AppBundle\Entity\CarPhoto;
 use Symfony\Component\Filesystem\Filesystem;
@@ -17,13 +19,19 @@ class StockController extends Controller
 
     private $carPhotosDirectory = 'bundles/app/img/stock/';
 
+    private $specification = [
+        'make' => 'make', 'model' => 'model', 'variant' => 'variant', 'firstRegistration' => 'first registration', 'mileage' => 'mileage', 'mot' => 'mot', 'doors' => 'doors', 'seats' => 'seats',
+        'colour' => 'colour', 'body' => 'body', 'fuelType' => 'fuel type', 'transmission' => 'transmission', 'engineSize' => 'engine size', 'bhp' => 'bhp', 'mpgUrban' => 'mpg urban',
+        'mpgExtraUrban' => 'mpg extra urban', 'mpgCombined' => 'mpg combined', 'length' => 'length', 'width' => 'width', 'height' => 'height', 'countryOfOrigin' => 'country of origin',
+    ];
+
     /**
      * @Route("/stock/{page}", name="stock", requirements={"page": "\d+"}, defaults={"page" = 1})
      * @Template()
      */
     public function indexAction($page)
     {
-        $cars = $this->getDoctrine()->getRepository('AppBundle:Car')->findAll();
+        $cars = $this->getDoctrine()->getRepository('AppBundle:Car')->findBy([], ['id' => 'DESC'], 6, 6 * ($page - 1));
 
         return ['cars' => $cars];
     }
@@ -34,41 +42,87 @@ class StockController extends Controller
      */
     public function viewAction($slug)
     {
-        $specification = [
-            'make',
-            'model',
-            'variant',
-            'firstRegistration',
-            'mileage',
-            'mot',
-            'doors',
-            'seats',
-            'colour',
-            'body',
-            'fuelType',
-            'transmission',
-            'engineSize',
-            'bhp',
-            'mpgUrban',
-            'mpgExtraUrban',
-            'mpgCombined',
-            'length',
-            'width',
-            'height',
-            'countryOfOrigin',
-        ];
         $car = $this->getDoctrine()->getRepository('AppBundle:Car')->findOneBy(['slug' => $slug]);
 
-        return ['car' => $car, 'specification' => $specification];
+        return ['car' => $car, 'specification' => $this->specification];
     }
 
     /**
-     * @Route("/admin/stock", name="admin_stock_list")
+     * @Route("/admin/stock/{page}", name="admin_stock_list", requirements={"page": "\d+"}, defaults={"page" = 1}))
      * @Template()
      */
-    public function adminListAction()
+    public function adminListAction($page)
     {
-        return [];
+        $this->denyAccessUnlessGranted('ROLE_USER', null);
+        $cars = $this->getDoctrine()->getRepository('AppBundle:Car')->findBy([], ['id' => 'DESC'], 10, 10 * ($page - 1));
+
+        return ['cars' => $cars];
+    }
+
+    /**
+     * @Route("/admin/stock/edit/{id}", name="admin_stock_edit", requirements={"id": "\d+"}))
+     * @Template()
+     */
+    public function adminEditAction(Request $request, $id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null);
+        $car = $this->getDoctrine()->getRepository('AppBundle:Car')->findOneById($id);
+
+        $form = $this->createForm(CarType::class, $car);
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted()) {
+            return ['car' => $car, 'form' => $form->createView()];
+        }
+
+        if (!$form->isValid()) {
+            foreach ($form->getErrors() as $error) {
+                $this->addFlash('danger', $error->getMessage());
+            }
+            return ['car' => $car, 'form' => $form->createView()];
+        }
+
+        $car->setSlug(Sluggable\Urlizer::urlize($car->getTitle()));
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        $this->addFlash('success', 'Your car was edited!');
+
+        $this->addCarPhotosIfNeeded($request, $car, new Filesystem());
+        return $this->redirectToRoute('admin_stock_edit', ['id' => $car->getId()]);
+    }
+
+    /**
+     * @Route("/admin/stock/delete/{id}", name="admin_stock_delete", requirements={"id": "\d+"}))
+     * @Template()
+     */
+    public function adminDeleteAction(Request $request, $id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null);
+        $car = $this->getDoctrine()->getRepository('AppBundle:Car')->findOneById($id);
+
+
+        $form = $this->createForm(CarDeleteType::class);
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted()) {
+            return ['car' => $car, 'form' => $form->createView()];
+        }
+
+        if (!$form->isValid()) {
+            foreach ($form->getErrors() as $error) {
+                $this->addFlash('danger', $error->getMessage());
+            }
+            return ['car' => $car, 'form' => $form->createView()];
+        }
+
+        $this->deleteCarPhotosIfNeeded($car);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($car);
+        $em->flush();
+        $this->addFlash('success', 'Your car was removed from stock!');
+
+        return $this->redirectToRoute('admin_stock_list');
     }
 
     /**
@@ -83,19 +137,61 @@ class StockController extends Controller
         $form = $this->createForm(CarType::class, $car);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $car->setSlug(Sluggable\Urlizer::urlize($car->getTitle()));
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($car);
-            $em->flush();
-
-            $this->addCarPhotosIfNeeded($request, $car, new Filesystem());
-
-            return $this->redirectToRoute('admin_stock_list');
+        if (!$form->isSubmitted()) {
+            return ['form' => $form->createView()];
         }
 
-        return ['form' => $form->createView()];
+        if (!$form->isValid()) {
+            foreach ($form->getErrors() as $error) {
+                $this->addFlash('danger', $error->getMessage());
+            }
+            return ['form' => $form->createView()];
+        }
+
+        $car->setSlug(Sluggable\Urlizer::urlize($car->getTitle()));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($car);
+        $em->flush();
+        $this->addFlash('success', 'Your car was added to stock!');
+
+        $this->addCarPhotosIfNeeded($request, $car, new Filesystem());
+
+        return $this->redirectToRoute('admin_stock_list');
+    }
+
+    /**
+     * @Route("/admin/stock/photos/{id}", name="admin_stock_car_photos", requirements={"id": "\d+"})
+     * @Template()
+     */
+    public function adminListPhotos(Request $request, $id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null);
+        $car = $this->getDoctrine()->getRepository('AppBundle:Car')->findOneById($id);
+
+        $form = $this->createFormBuilder($car)->getForm();
+
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted()) {
+            return ['car' => $car, 'form' => $form->createView()];
+        }
+
+        if (!$form->isValid()) {
+            foreach ($form->getErrors() as $error) {
+                $this->addFlash('danger', $error->getMessage());
+            }
+            return ['car' => $car, 'form' => $form->createView()];
+        }
+
+        if (empty($request->request->get('photo'))) {
+            $this->addFlash('warning', 'No photos were marked for deletion!');
+            return ['car' => $car, 'form' => $form->createView()];
+        }
+
+        $this->deleteCarPhotosIfNeeded($car, $request->request->get('photo'));
+        $this->addFlash('success', 'Photos of car were removed!');
+
+        return $this->redirectToRoute('admin_stock_car_photos', ['id' => $car->getId(), 'request' => $request]);
     }
 
     protected function addCarPhotosIfNeeded(Request $request, Car $car, Filesystem $fs)
@@ -116,22 +212,23 @@ class StockController extends Controller
             $clientOriginalName = $uploadedFile->getClientOriginalName();
             $filename = pathinfo($clientOriginalName, PATHINFO_FILENAME);
             $extension = pathinfo($clientOriginalName, PATHINFO_EXTENSION);
-            $sluggedFilename = Sluggable\Urlizer::urlize($filename);
+            $sluggedFilename = sprintf('%s-%s', Sluggable\Urlizer::urlize($filename), md5(time().rand(0, 1000)));
             $sluggedName = strtolower(sprintf('%s.%s', $sluggedFilename, $extension));
             $uploadedFile->move($carPhotosDirectory, $sluggedName);
             $thumbnailCarousel = $carPhotosDirectory . 'thumbnails/carousel/' . $sluggedName;
             $thumbnailBig = $carPhotosDirectory . 'thumbnails/big/' . $sluggedName;
             $thumbnailMedium = $carPhotosDirectory . 'thumbnails/medium/' . $sluggedName;
-            $fs->copy($carPhotosDirectory . $sluggedName, $thumbnailCarousel);
-            $fs->copy($carPhotosDirectory . $sluggedName, $thumbnailBig);
-            $fs->copy($carPhotosDirectory . $sluggedName, $thumbnailMedium);
+            $thumbnail = $this->get('app.utils.thumbnail');
             try {
-                $this->get('app.utils.thumbnail')->create($thumbnailCarousel, 'carousel_thumb_out');
-                $this->get('app.utils.thumbnail')->create($thumbnailBig, 'big_thumb_out');
-                $this->get('app.utils.thumbnail')->create($thumbnailMedium, 'medium_thumb_out');
+                $fs->copy($carPhotosDirectory . $sluggedName, $thumbnailCarousel);
+                $thumbnail->create($thumbnailCarousel, 'carousel_thumb_out');
+                $fs->copy($carPhotosDirectory . $sluggedName, $thumbnailBig);
+                $thumbnail->create($thumbnailBig, 'big_thumb_out');
+                $fs->copy($carPhotosDirectory . $sluggedName, $thumbnailMedium);
+                $thumbnail->create($thumbnailMedium, 'medium_thumb_out');
             } catch (Exception $e) {
                 $fs->remove([
-                    $carPhotosDirectory.$sluggedName,
+                    $carPhotosDirectory . $sluggedName,
                     $thumbnailCarousel,
                     $thumbnailBig,
                     $thumbnailMedium,
@@ -143,6 +240,41 @@ class StockController extends Controller
             $carPhoto->setName($sluggedName);
             $em->persist($carPhoto);
             $em->flush();
+        }
+    }
+
+    protected function deleteCarPhotosIfNeeded(Car $car, array $selectedPhotos = [])
+    {
+        $photos = $car->getCarPhotos();
+
+        if (!$photos) {
+            return;
+        }
+
+        $fs = new Filesystem();
+        $carPhotosDirectory = $this->carPhotosDirectory;
+        $imgRemove = [];
+
+        $em = $this->getDoctrine()->getManager();
+        foreach ($photos as $carPhoto) {
+            if (!empty($selectedPhotos)) {
+                if (!in_array($carPhoto->getId(), $selectedPhotos)) {
+                    continue;
+                }
+            }
+            $name = $carPhoto->getName();
+            $em->remove($carPhoto);
+            $original = $carPhotosDirectory . $name;
+            $thumbnailCarousel = $carPhotosDirectory . 'thumbnails/carousel/' . $name;
+            $thumbnailBig = $carPhotosDirectory . 'thumbnails/big/' . $name;
+            $thumbnailMedium = $carPhotosDirectory . 'thumbnails/medium/' . $name;
+            $imgRemove += [$original, $thumbnailCarousel, $thumbnailBig, $thumbnailMedium];
+        }
+        $em->flush();
+        try {
+            $fs->remove($imgRemove);
+        } catch (IOException $e) {
+            $this->addFlash('warning', $e->getMessage());
         }
     }
 

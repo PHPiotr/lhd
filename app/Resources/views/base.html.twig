@@ -77,11 +77,6 @@
                     <li{% if app.request.attributes.get('_route') starts with 'contact' %} class="active"{% endif %}>
                         <a href="{{ path('contact') }}">Contact</a>
                     </li>
-                    {% if is_granted('ROLE_USER') %}
-                        <li>
-                            <a href="{{ path('admin') }}">Admin</a>
-                        </li>
-                    {% endif %}
                 </ul>
             </div>
         </div>

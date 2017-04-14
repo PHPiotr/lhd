@@ -7,3 +7,7 @@ services:
     app.utils.thumbnail:
         class:        AppBundle\Utils\Thumbnail
         arguments: ['@liip_imagine.data.manager', '@liip_imagine.filter.manager']
+    twig.extension.text:
+       class: Twig_Extensions_Extension_Text
+       tags:
+           - { name: twig.extension }

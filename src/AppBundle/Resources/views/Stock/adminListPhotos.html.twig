@@ -1,0 +1,39 @@
+{% extends 'auth_base.html.twig' %}
+{% block title %}{{ parent() }} - {{ car.title }} photos{% endblock %}
+{% block body %}
+    <div class="stock">
+        <div class="row">
+            {% for photo in car.getCarPhotos() %}
+                {% if loop.first %}
+                    <h1>{{ car.title }}: edit its photos</h1>
+                    <div class="well">
+                        <ul class="nav nav-pills">
+                            <li role="presentation">
+                                <a href="{{ path('admin_stock_edit', {'id': car.id}) }}">Back to car edit</a>
+                            </li>
+                        </ul>
+                    </div>
+                    {{ form_start(form) }}
+                {% endif %}
+                <div class="form-group">
+                    <img src="{{ asset('bundles/app/img/stock/thumbnails/medium/'~photo.name) }}"
+                         alt="{{ car.title ~ ' ' ~ photo.name }}"/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="photo[]" value="{{ photo.id }}"/>
+                            Mark for deletion: {{ photo.name }}
+                        </label>
+                    </div>
+                </div>
+                {% if loop.last %}
+                    <div class="form-group">
+                        <button type="submit" class="btn-default btn">Delete selected photos</button>
+                    </div>
+                    {{ form_end(form) }}
+                {% endif %}
+            {% else %}
+                <h1>No photos for {{ car.title }}</h1>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

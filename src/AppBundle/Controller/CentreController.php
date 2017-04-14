@@ -16,7 +16,9 @@ class CentreController extends Controller
      */
     public function indexAction()
     {
-        return [];
+        $newestCars = $this->getDoctrine()->getRepository('AppBundle:Car')->findBy([], ['id' => 'DESC'], 3);
+
+        return ['newestCars' => $newestCars];
     }
 
 }

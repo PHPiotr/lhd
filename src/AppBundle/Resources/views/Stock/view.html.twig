@@ -15,14 +15,21 @@
 {% block body %}
     <div class="row stock-view">
         <h1>{{ car.title }}</h1>
-        <h2>Price: <strong>£{{ car.price }}</strong></h2>
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <h2{% if car.isSold %} class="sold"{% endif %}>Price: <strong>£{{ car.price|number_format(0, '.', ',') }}</strong></h2>
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
+                {% set state_flag = '' %}
+                {% if car.isSold %}
+                    {% set state_flag = "<div class=\"carousel-caption sold\"><p><strong>Sold</strong></p></div>" %}
+                {% elseif car.isReserved %}
+                {% set state_flag = "<div class=\"carousel-caption reserved\"><p><strong>Reserved</strong></p></div>" %}
+                {% endif %}
                 {% for photo in car.getCarPhotos() %}
                     <div class="item {% if loop.first %}active{% endif %}">
                         <img src="{{ asset('bundles/app/img/stock/thumbnails/carousel/' ~ photo.name) }}"
                              alt="{{ car.title ~ ' - ' ~ photo.name }}"/>
+                        {{ state_flag|raw }}
                     </div>
                 {% endfor %}
             </div>
@@ -54,10 +61,10 @@
     <div class="row specification">
         <h2>Specification</h2>
         <table class="table-bordered">
-            {% for prop in specification %}
+            {% for key, prop in specification %}
                 <tr>
                     <th>{{ prop }}</th>
-                    <td>{{ car.getValueForKey(prop) }}</td>
+                    <td>{{ car.getValueForKey(key) }}</td>
                 </tr>
             {% endfor %}
         </table>
