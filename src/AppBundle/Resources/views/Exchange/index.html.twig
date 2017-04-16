@@ -1,3 +1,42 @@
 {% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }} - Part exchange
+{% endblock %}
+
+{% form_theme form _self %}
+{% block form_label_class -%}
+    col-sm-3
+{%- endblock form_label_class %}
+{% block form_group_class -%}
+    col-sm-5
+{%- endblock form_group_class %}
+{% block form_row -%}
+    {% if form.vars.attr.heading is defined %}
+        <div class="form-group">
+            <label class="red control-label {{ block('form_label_class') }}">{{ form.vars.attr.heading }}</label>
+        </div>
+    {% endif %}
+    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        <div class="{{ block('form_group_class') }}">
+            {{- form_widget(form) -}}
+            {{- form_errors(form) -}}
+        </div>
+    </div>
+{%- endblock form_row %}
+
 {% block body %}
+    <div class="exchange">
+        <div class="row">
+            <h1>Part exchange</h1>
+            <p>We will be happy to take your rhd or lhd car as part exchange, we offer fair prices based on condition
+                and mileage.</p>
+            <p>We will contact you within 4 hours to make a recommendation on the value of your used car.</p>
+            <p>For an accurate quote please complete our part exchange form below, and provide as much information as
+                possible.</p>
+        </div>
+        <div class="row">
+            {{ form(form, {'attr': {'action': path('exchange'), 'novalidate': 'novalidate'}}) }}
+        </div>
+    </div>
 {% endblock %}
