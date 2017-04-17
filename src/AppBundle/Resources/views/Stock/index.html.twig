@@ -5,7 +5,9 @@
 {% block body %}
     <div class="stock">
 
-        {% include 'pagination.html.twig' with {'pagesCount': pagesCount, 'currentPage': currentPage} %}
+        <div class="top-pagination">
+            {% include 'pagination.html.twig' with {'pagesCount': pagesCount, 'currentPage': currentPage} %}
+        </div>
 
         {% for car in cars %}
 

@@ -370,8 +370,20 @@ footer .navbar-default .navbar-nav > .active > a:hover {
         width: 100%;
     }
 
+    .stock .row.list {
+        margin-top: 0;
+    }
+    .stock .thumbnail {
+        margin-bottom: 50px;
+    }
     .stock .thumbnail .caption h3 {
         text-align: left;
+    }
+    .stock .pagination {
+        margin: 10px 0 0;
+    }
+    .stock .top-pagination {
+        margin-bottom: 50px;
     }
 
     .description,
@@ -411,6 +423,9 @@ footer .navbar-default .navbar-nav > .active > a:hover {
 }
 
 @media (max-width: 650px) {
+    .red .navbar-nav {
+        text-align:left;
+    }
     .red .nav > li {
         padding: 0 4px;
     }
@@ -439,7 +454,6 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     .carousel-caption p {
         font-size: 10px;
     }
-
 
     .specification .table-bordered > tbody > tr > th,
     .specification .table-bordered > tbody > tr > td {
