@@ -280,6 +280,34 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     font-size: 20px;
 }
 
+.van-mpv-types .panel-default.closed > .panel-heading {
+    color: #fff;
+    background-color: #2e3192;
+    border-color: #ddd;
+}
+.van-mpv-types .panel-default.open > .panel-heading {
+    color: #fff;
+    background-color: #ff0000;
+    border-color: #2e3192;
+    border-bottom: 1px solid #2e3192;
+}
+.van-mpv-types .panel-default {
+    border-color: #2e3192;
+}
+.van-mpv-types .panel-group {
+    margin-top: 50px;
+}
+.van-mpv-types .panel-heading,
+.van-mpv-types .panel-group .panel {
+    border-radius: 0;
+}
+.van-mpv-types .panel-title {
+    font-size: 20px;
+}
+.van-mpv-types .panel-body img {
+    max-width: 100%;
+}
+
 @media (min-width: 991px) and (max-width: 1199px) {
     .red .navbar-text.first {
         display: none;
@@ -392,6 +420,7 @@ footer .navbar-default .navbar-nav > .active > a:hover {
         margin: 0 0 30px;
     }
 
+    .van-mpv-types .row,
     .exchange .row {
         margin-left: 0;
         margin-right: 0;
