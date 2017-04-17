@@ -79,7 +79,7 @@ class ExchangeController extends Controller
             return ['form' => $form->createView()];
         }
 
-        $this->addFlash('success', 'Thanks, your message wa sent. We will contact you soon.');
+        $this->addFlash('success', 'Thanks, your message was sent. We will contact you soon.');
 
         return $this->redirectToRoute('exchange');
     }
