@@ -83,6 +83,13 @@
     </nav>
 </header>
 <div class="container">
+    {% for type, flash_messages in app.session.flashBag.all %}
+        {% for flash_message in flash_messages %}
+            <div class="alert alert-{{ type }}" role="alert">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
     {% block body %}{% endblock %}
 </div>
 <footer>

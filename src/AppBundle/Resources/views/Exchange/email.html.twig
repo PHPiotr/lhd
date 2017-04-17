@@ -1,4 +1,5 @@
 <h1 style="color: #2e3192; text-transform: uppercase; font-weight: normal">Part exchange</h1>
+<p style="color: #2e3192;text-decoration: underline;">Sent at: {{ "now"|date("m/d/Y H:i:s") }}</p>
 <table style="width: 70%">
     {% for key, value in data %}
         {% if key == 'name' %}
@@ -27,4 +28,3 @@
         </tr>
     {% endfor %}
 </table>
-<p style="color: #ff0000;text-decoration: underline;">Sent at: {{ "now"|date("m/d/Y Hi:i:s") }}</p>
