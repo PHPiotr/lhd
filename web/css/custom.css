@@ -423,9 +423,6 @@ footer .navbar-default .navbar-nav > .active > a:hover {
 }
 
 @media (max-width: 650px) {
-    .red .navbar-nav {
-        text-align:left;
-    }
     .red .nav > li {
         padding: 0 4px;
     }
