@@ -1,0 +1,13 @@
+<h1>Part exchange</h1>
+{% for key, value in data %}
+<table style="width: 100%">
+    <tr>
+        <th style="border: 1px solid #2e3192; color: #2e3192; font-size: 20px; padding: 5px; width: 50%; text-transform: uppercase;">
+            {{ key }}
+        </th>
+        <td style="border: 1px solid #2e3192; color: #2e3192; font-size: 20px; padding: 5px; width: 50%;">
+            {{ value }}
+        </td>
+    </tr>
+</table>
+{% endfor %}

@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ExchangeController extends Controller
@@ -25,7 +27,7 @@ class ExchangeController extends Controller
         $form = $this->createFormBuilder()
             ->add('name', null, ['constraints' => [new NotBlank()], 'required' => true, 'attr' => ['heading' => 'About you']])
             ->add('telephone_number', null, ['constraints' => [new NotBlank()], 'required' => true])
-            ->add('email_address', EmailType::class, ['constraints' => [new NotBlank()], 'required' => true])
+            ->add('email_address', EmailType::class, ['constraints' => [new NotBlank(), new Email()], 'required' => true])
             ->add('reg_number', null, ['constraints' => [new NotBlank()], 'attr' => ['heading' => 'About your car']])
             ->add('make', null, ['constraints' => [new NotBlank()], 'required' => true])
             ->add('model', null, ['constraints' => [new NotBlank()], 'required' => true])
@@ -38,7 +40,7 @@ class ExchangeController extends Controller
             ->add('general_condition', null, ['constraints' => [new NotBlank()], 'required' => true])
             ->add('defects', null, ['constraints' => [new NotBlank()], 'required' => true])
             ->add('vehicle_interested_in', null, ['constraints' => [new NotBlank()], 'required' => true])
-            ->add('additional_notes', TextareaType::class)
+            ->add('additional_notes', TextareaType::class, ['attr' => ['maxlength' => 1000], 'constraints' => [new Length(['max' => 1000])]])
             ->add('send', SubmitType::class, ['attr' => ['class' => 'btn-danger']])
             ->getForm();
 
@@ -55,7 +57,28 @@ class ExchangeController extends Controller
             return ['form' => $form->createView()];
         }
 
-        $this->addFlash('success', 'Thanks, your message has been sent. We will contact you soon.');
+        $data = $form->getData();
+        $message = $this->renderView('AppBundle:Exchange:email.html.twig', [
+            'data' => $data,
+        ]);
+
+        $to = $this->getParameter('mailer_to');
+        $subject = 'LHD Part Exchange';
+        $emailFrom = $data['email_address'];
+
+        $headers[] = sprintf('From: %s', $emailFrom);
+        $headers[] = sprintf('Reply-To: %s', $emailFrom);
+        $headers[] = 'MIME-Version: 1.0';
+        $headers[] = 'Content-Type: text/html; charset=UTF-8';
+
+        $sent = mail($to, $subject, $message, implode("\r\n", $headers), '-f ' . $emailFrom);
+
+        if (!$sent) {
+            $this->addFlash('danger', 'Sorry, something went wrong and your message has not been sent.');
+
+            return ['form' => $form->createView()];
+        }
+
         return $this->redirectToRoute('exchange');
     }
 
