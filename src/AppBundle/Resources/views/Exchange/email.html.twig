@@ -1,14 +1,30 @@
-<h1 style="color: #2e3192">Part exchange</h1>
+<h1 style="color: #2e3192; text-transform: uppercase; font-weight: normal">Part exchange</h1>
 <table style="width: 70%">
     {% for key, value in data %}
+        {% if key == 'name' %}
+            <tr>
+                <th style="text-align: right; border: none; color: #ff0000; font-size: 20px; padding: 5px; width: 30%; text-transform: uppercase;">
+                    About me
+                </th>
+                <td style="border: none;"></td>
+            </tr>
+        {% endif %}
+        {% if key == 'reg_number' %}
+            <tr>
+                <th style="text-align: right; border: none; color: #ff0000; font-size: 20px; padding: 5px; width: 30%; text-transform: uppercase;">
+                    About my car
+                </th>
+                <td style="border: none;"></td>
+            </tr>
+        {% endif %}
         <tr>
             <th style="text-align: right; border: none; color: #2e3192; font-size: 20px; padding: 5px; width: 30%; text-transform: uppercase;">
                 {{ key }}
             </th>
-            <td style="border: 1px solid #2e3192; color: #2e3192; font-size: 20px; padding: 5px; width: 70%;">
+            <td style="border: 1px solid #2e3192; color: #2e3192; font-size: 20px; padding: 5px; width: 50%;">
                 {{ value }}
             </td>
         </tr>
     {% endfor %}
 </table>
-<p style="color: #2e3192;">{{ "now"|date("m/d/Y") }}</p>
+<p style="color: #ff0000;text-decoration: underline;">Sent at: {{ "now"|date("m/d/Y Hi:i:s") }}</p>
