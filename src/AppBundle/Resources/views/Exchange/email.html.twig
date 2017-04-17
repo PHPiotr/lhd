@@ -1,13 +1,14 @@
-<h1>Part exchange</h1>
-{% for key, value in data %}
-<table style="width: 100%">
-    <tr>
-        <th style="border: 1px solid #2e3192; color: #2e3192; font-size: 20px; padding: 5px; width: 50%; text-transform: uppercase;">
-            {{ key }}
-        </th>
-        <td style="border: 1px solid #2e3192; color: #2e3192; font-size: 20px; padding: 5px; width: 50%;">
-            {{ value }}
-        </td>
-    </tr>
+<h1 style="color: #2e3192">Part exchange</h1>
+<table style="width: 70%">
+    {% for key, value in data %}
+        <tr>
+            <th style="text-align: right; border: none; color: #2e3192; font-size: 20px; padding: 5px; width: 30%; text-transform: uppercase;">
+                {{ key }}
+            </th>
+            <td style="border: 1px solid #2e3192; color: #2e3192; font-size: 20px; padding: 5px; width: 70%;">
+                {{ value }}
+            </td>
+        </tr>
+    {% endfor %}
 </table>
-{% endfor %}
+<p style="color: #2e3192;">{{ "now"|date("m/d/Y") }}</p>
