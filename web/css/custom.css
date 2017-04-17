@@ -2,6 +2,10 @@ body {
     color: #2e3192;
 }
 
+.alert {
+    border-radius: 0;
+}
+
 .navbar-default.red {
     background-color: #ff0000;
     border-color: #ff0000;
@@ -260,7 +264,7 @@ footer .navbar-default .navbar-nav > .active > a:hover {
 }
 .exchange .form-horizontal .control-label {
     text-transform: uppercase;
-    font-size: 20px;
+    font-size: 18px;
 }
 .exchange .form-horizontal .control-label.red {
     color: red;
@@ -276,6 +280,13 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     font-size: 20px;
 }
 
+@media (min-width: 991px) and (max-width: 1199px) {
+    .red .navbar-text.first {
+        display: none;
+        visibility: hidden;
+    }
+}
+
 @media (min-width: 768px) and (max-width: 991px) {
     header .nav.navbar-nav > li > a {
         padding-right: 10px;
@@ -287,6 +298,9 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     .thumbnail .caption h3 span {
         display: block;
     }
+    .thumbnail .caption table {
+        font-size: 13px;
+    }
     .carousel-caption p {
         font-size: 15px;
     }
@@ -294,6 +308,19 @@ footer .navbar-default .navbar-nav > .active > a:hover {
         display: none;
         visibility: hidden;
     }
+    .red .navbar-text {
+        margin-right: 0;
+        font-size: 15px;
+    }
+
+    .stock .row .thumbnail .caption h2 {
+        font-size: 20px;
+    }
+
+    .exchange .form-horizontal .control-label {
+        font-size: 13px;
+    }
+
     footer .navbar-nav > li > a {
         padding-top: 15px;
         padding-bottom: 15px;
@@ -326,8 +353,15 @@ footer .navbar-default .navbar-nav > .active > a:hover {
         display: inline-block;
         padding: 0 10px;
     }
-    .carousel-caption p {
+    .red .navbar-text {
         font-size: 15px;
+    }
+    .carousel-caption {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .carousel-caption p {
+        font-size: 12px;
     }
     .thumbnail .caption h3 {
         text-align: center;
@@ -335,6 +369,22 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     .thumbnail > img, .thumbnail a > img {
         width: 100%;
     }
+
+    .stock .thumbnail .caption h3 {
+        text-align: left;
+    }
+
+    .description,
+    .specification,
+    .stock-view {
+        margin: 0 0 30px;
+    }
+
+    .exchange .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
     footer .collapse {
         display: block;
     }
@@ -353,18 +403,46 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     }
 }
 
+@media (max-width: 687px) {
+    .red .navbar-text.first {
+        display: none;
+        visibility: hidden;
+    }
+}
+
 @media (max-width: 650px) {
     .red .nav > li {
-        padding: 0 5px;
+        padding: 0 4px;
     }
     .red .navbar-text.first {
         display: none;
         visibility: hidden;
     }
+
+    .specification .table-bordered > tbody > tr > th,
+    .specification .table-bordered > tbody > tr > td {
+        font-size: 15px;
+    }
+
     footer .nav > li {
         display: block;
     }
     footer .navbar-nav.navbar-right li {
         text-align: right;
+    }
+}
+
+@media (max-width: 449px) {
+    .red .navbar-text {
+        font-size: 10px;
+    }
+    .carousel-caption p {
+        font-size: 10px;
+    }
+
+
+    .specification .table-bordered > tbody > tr > th,
+    .specification .table-bordered > tbody > tr > td {
+        font-size: 12px;
     }
 }
