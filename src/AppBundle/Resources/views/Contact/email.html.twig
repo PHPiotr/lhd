@@ -1,0 +1,14 @@
+<h1 style="color: #2e3192; text-transform: uppercase; font-weight: normal">Contact Form</h1>
+<p style="color: #2e3192;text-decoration: underline;">Sent at: {{ "now"|date("m/d/Y H:i:s") }}</p>
+<table style="width: 70%">
+    {% for key, value in data %}
+        <tr>
+            <th style="text-align: right; border: none; color: #2e3192; font-size: 20px; padding: 5px; width: 30%; text-transform: uppercase;">
+                {{ key }}
+            </th>
+            <td style="border: 1px solid #2e3192; color: #2e3192; font-size: 20px; padding: 5px; width: 50%;">
+                {{ value }}
+            </td>
+        </tr>
+    {% endfor %}
+</table>

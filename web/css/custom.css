@@ -308,6 +308,13 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     max-width: 100%;
 }
 
+.contact form {
+    margin-top: 50px;
+}
+.contact form textarea {
+    height: 200px;
+}
+
 @media (min-width: 991px) and (max-width: 1199px) {
     .red .navbar-text.first {
         display: none;
