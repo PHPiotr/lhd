@@ -89,6 +89,7 @@ header .navbar-default .navbar-nav > li > a:hover {
 .specification table th {
     text-transform: uppercase;
 }
+
 .specification .table-bordered > tbody > tr > th, .specification .table-bordered > tbody > tr > td {
     width: 50%;
     padding: 10px;
@@ -96,6 +97,7 @@ header .navbar-default .navbar-nav > li > a:hover {
     color: #2e3192;
     font-size: 20px;
 }
+
 .specification .btn-danger {
     margin-top: 50px;
 }
@@ -119,6 +121,7 @@ header .navbar-default .navbar-nav > li > a:hover {
     background: #ff0000;
     background-image: none;
 }
+
 .stock-view .carousel-caption.reserved {
     background: #2e3192;
 }
@@ -262,19 +265,24 @@ footer .navbar-default .navbar-nav > .active > a:hover {
 .exchange .has-error .control-label {
     color: #2e3192;
 }
+
+.exchange .control-label,
 .exchange .form-horizontal .control-label {
     text-transform: uppercase;
     font-size: 18px;
 }
+
 .exchange .form-horizontal .control-label.red {
     color: red;
     padding-top: 50px;
 }
+
 .exchange .form-control {
     font-size: 20px;
     border-radius: 0;
     border: 1px solid #2e3192;
 }
+
 .exchange .form-group .btn-danger {
     text-transform: uppercase;
     font-size: 20px;
@@ -285,34 +293,51 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     background-color: #2e3192;
     border-color: #ddd;
 }
+
 .van-mpv-types .panel-default.open > .panel-heading {
     color: #fff;
     background-color: #ff0000;
     border-color: #2e3192;
     border-bottom: 1px solid #2e3192;
 }
+
 .van-mpv-types .panel-default {
     border-color: #2e3192;
 }
+
 .van-mpv-types .panel-group {
     margin-top: 50px;
 }
+
 .van-mpv-types .panel-heading,
 .van-mpv-types .panel-group .panel {
     border-radius: 0;
 }
+
 .van-mpv-types .panel-title {
     font-size: 20px;
 }
+
 .van-mpv-types .panel-body img {
     max-width: 100%;
+}
+
+.location .row #map {
+    width: 100%;
+    height: 800px;
 }
 
 .contact form {
     margin-top: 50px;
 }
+
 .contact form textarea {
     height: 200px;
+}
+
+.location form {
+    margin-top: 50px;
+    bottom: 50px;
 }
 
 @media (min-width: 991px) and (max-width: 1199px) {
@@ -327,22 +352,28 @@ footer .navbar-default .navbar-nav > .active > a:hover {
         padding-right: 10px;
         font-size: 16px;
     }
+
     .nav > li > a {
         padding: 0px 5px;
     }
+
     .thumbnail .caption h3 span {
         display: block;
     }
+
     .thumbnail .caption table {
         font-size: 13px;
     }
+
     .carousel-caption p {
         font-size: 15px;
     }
+
     .red .navbar-text.first {
         display: none;
         visibility: hidden;
     }
+
     .red .navbar-text {
         margin-right: 0;
         font-size: 15px;
@@ -356,51 +387,65 @@ footer .navbar-default .navbar-nav > .active > a:hover {
         font-size: 13px;
     }
 
+    .location .row #map {
+        height: 600px;
+    }
+
     footer .navbar-nav > li > a {
         padding-top: 15px;
         padding-bottom: 15px;
     }
 }
+
 @media (max-width: 767px) {
     .navbar-toggle {
         float: left;
         margin-left: 15px;
     }
+
     .navbar-default.red {
         background-color: transparent;
         border-color: transparent;
         margin-bottom: 10px;
         margin-top: 30px;
     }
+
     .navbar-default.red .navbar-header {
         position: relative;
         top: 0;
         margin: 0 auto;
         text-align: center;
     }
+
     .red .navbar-nav {
         float: none;
         background: #ff0000;
         margin: 30px auto 0;
         text-align: center;
     }
+
     .red .nav > li {
         display: inline-block;
         padding: 0 10px;
     }
+
     .red .navbar-text {
         font-size: 15px;
     }
+
     .carousel-caption {
         padding-top: 5px;
         padding-bottom: 5px;
     }
+
     .carousel-caption p {
         font-size: 12px;
     }
+
     .thumbnail .caption h3 {
         text-align: center;
     }
+
     .thumbnail > img, .thumbnail a > img {
         width: 100%;
     }
@@ -408,15 +453,19 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     .stock .row.list {
         margin-top: 0;
     }
+
     .stock .thumbnail {
         margin-bottom: 50px;
     }
+
     .stock .thumbnail .caption h3 {
         text-align: left;
     }
+
     .stock .pagination {
         margin: 10px 0 0;
     }
+
     .stock .top-pagination {
         margin-bottom: 50px;
     }
@@ -427,25 +476,34 @@ footer .navbar-default .navbar-nav > .active > a:hover {
         margin: 0 0 30px;
     }
 
+    .location .row,
     .van-mpv-types .row,
     .exchange .row {
         margin-left: 0;
         margin-right: 0;
     }
 
+    .location .row #map {
+        height: 600px;
+    }
+
     footer .collapse {
         display: block;
     }
+
     footer .nav > li {
         display: inline-block;
     }
+
     footer .navbar-nav {
         margin: 7.5px 0px;
         float: left;
     }
+
     footer .navbar-nav.navbar-right {
         float: right;
     }
+
     footer .nav > li > a {
         padding: 10px 5px;
     }
@@ -462,6 +520,7 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     .red .nav > li {
         padding: 0 4px;
     }
+
     .red .navbar-text.first {
         display: none;
         visibility: hidden;
@@ -472,9 +531,14 @@ footer .navbar-default .navbar-nav > .active > a:hover {
         font-size: 15px;
     }
 
+    .location .row #map {
+        height: 400px;
+    }
+
     footer .nav > li {
         display: block;
     }
+
     footer .navbar-nav.navbar-right li {
         text-align: right;
     }
@@ -484,6 +548,7 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     .red .navbar-text {
         font-size: 10px;
     }
+
     .carousel-caption p {
         font-size: 10px;
     }
@@ -491,5 +556,9 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     .specification .table-bordered > tbody > tr > th,
     .specification .table-bordered > tbody > tr > td {
         font-size: 12px;
+    }
+
+    .location .row #map {
+        height: 300px;
     }
 }

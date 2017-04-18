@@ -1,3 +1,103 @@
 {% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }} - Location
+{% endblock %}
+
+{% form_theme form _self %}
+{% block form_label_class -%}
+    col-sm-4
+{%- endblock form_label_class %}
+{% block form_group_class -%}
+    col-sm-5
+{%- endblock form_group_class %}
+
 {% block body %}
+    <div class="location exchange">
+        <div class="row">
+            <h1>Location</h1>
+            <h3>Heath Park</h3>
+            <p>Main Road, Cropthorne, Pershore, Worcestershire WR10 3NE</p>
+            {{ form(form) }}
+            <div id="directions"></div>
+            <div id="map"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function initMap() {
+            var hotSpot = {lat: 52.099410, lng: -2.017929};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 16,
+                center: hotSpot,
+                mapTypeId: google.maps.MapTypeId.HYBRID,
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.TOP_CENTER
+                }
+            });
+            var contentString = '<div><h2 class="gm-title">{{ title }}</h2><address>{{ postcode }}</address></div>';
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString,
+                position: {lat: 52.099410, lng: -2.017929}
+            });
+            infowindow.open(map);
+            map.setCenter(new google.maps.LatLng('52.099410', '-2.017929'));
+            var marker = new google.maps.Marker({
+                position: hotSpot,
+                map: map
+            });
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.open(map, marker);
+            });
+
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer({
+                draggable: true,
+                map: map,
+                panel: document.getElementById('directions')
+            });
+
+            $(document).ready(function () {
+                (function () {
+                    var form = $('.location form');
+                    var formOrigin = $('#form_origin');
+                    form.submit(function (e) {
+                        e.preventDefault();
+                        var origin = $.trim(formOrigin.val());
+                        if (!origin) {
+                            return;
+                        }
+                        displayRoute(origin, directionsService, directionsDisplay);
+                        return;
+                    });
+                    formOrigin.keyup(function() {
+                        if (!$.trim($(this).val())) {
+                            $('#total, #directions').html('');
+                        }
+                    });
+                })();
+            });
+        }
+
+        function displayRoute(origin, service, display) {
+            service.route({
+                origin: origin,
+                destination: '{{ postcode }}',
+                waypoints: [],
+                travelMode: 'DRIVING',
+                avoidTolls: true,
+                unitSystem: google.maps.UnitSystem.IMPERIAL
+            }, function (response, status) {
+                if (status === 'OK') {
+                    display.setDirections(response);
+                } else {
+                    alert('Could not display directions due to: ' + status);
+                }
+            });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&&callback=initMap"></script>
 {% endblock %}

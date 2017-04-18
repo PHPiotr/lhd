@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-    {{ parent() }} - Part exchange
+    {{ parent() }} - Contact us
 {% endblock %}
 
 {% form_theme form _self %}
@@ -10,20 +10,6 @@
 {% block form_group_class -%}
     col-sm-5
 {%- endblock form_group_class %}
-{% block form_row -%}
-    {% if form.vars.attr.heading is defined %}
-        <div class="form-group">
-            <label class="red control-label {{ block('form_label_class') }}">{{ form.vars.attr.heading }}</label>
-        </div>
-    {% endif %}
-    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
-        {{- form_label(form) -}}
-        <div class="{{ block('form_group_class') }}">
-            {{- form_widget(form) -}}
-            {{- form_errors(form) -}}
-        </div>
-    </div>
-{%- endblock form_row %}
 
 {% block body %}
     <div class="exchange contact">
