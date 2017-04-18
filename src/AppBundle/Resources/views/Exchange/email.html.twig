@@ -20,7 +20,7 @@
         {% endif %}
         <tr>
             <th style="text-align: right; border: none; color: #2e3192; font-size: 20px; padding: 5px; width: 30%; text-transform: uppercase;">
-                {{ key }}
+                {{ key | replace({'_': ' '}) }}
             </th>
             <td style="border: 1px solid #2e3192; color: #2e3192; font-size: 20px; padding: 5px; width: 50%;">
                 {{ value }}
