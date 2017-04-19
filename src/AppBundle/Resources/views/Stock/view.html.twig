@@ -2,6 +2,9 @@
 {% block title %}
     {{ parent() }} - Stock - {{ car.title }}
 {% endblock %}
+{% block description %}
+    {{ car.title }} - no need to wait weeks and go through the import process.
+{% endblock %}
 {% block stylesheets %}
     {% stylesheets
     'css/bootstrap.min.css'
