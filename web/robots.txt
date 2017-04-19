@@ -2,4 +2,16 @@
 # www.google.com/support/webmasters/bin/answer.py?hl=en&answer=156449
 
 User-agent: *
-Disallow:
+Disallow: /login
+Disallow: /login/
+Disallow: /admin
+Disallow: /admin/
+Disallow /admin/stock
+Disallow /admin/stock/list
+Disallow /admin/stock/list/
+Disallow: /admin/stock/edit
+Disallow: /admin/stock/edit/
+Disallow: /admin/stock/delete
+Disallow: /admin/stock/delete/
+Disallow: /admin/stock/photos
+Disallow: /admin/stock/photos/
