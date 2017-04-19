@@ -22,6 +22,27 @@
             <div id="map"></div>
         </div>
     </div>
+    <div class="modal fade" id="error-modal" tabindex="-1" role="dialog" aria-labelledby="error-modal-label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h2 class="modal-title" id="error-modal-label">Sorry, we have a problem.</h2>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        We are unable to display directions based on location data you provided.
+                        Please specify more detailed location information or try entering your postcode.
+                        If that does not help, please let us know about it using our <a href="{{ path('contact') }}">contact form</a>.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
@@ -73,7 +94,7 @@
                         displayRoute(origin, directionsService, directionsDisplay);
                         return;
                     });
-                    formOrigin.keyup(function() {
+                    formOrigin.keyup(function () {
                         if (!$.trim($(this).val())) {
                             $('#total, #directions').html('');
                         }
@@ -94,7 +115,7 @@
                 if (status === 'OK') {
                     display.setDirections(response);
                 } else {
-                    alert('Could not display directions due to: ' + status);
+                    $('#error-modal').modal();
                 }
             });
         }
