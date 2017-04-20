@@ -25,10 +25,10 @@ class ExchangeController extends Controller
     public function indexAction(Request $request)
     {
         $form = $this->createFormBuilder()
-            ->add('name', null, ['label' => 'Name *', 'constraints' => [new NotBlank()], 'required' => true, 'attr' => ['heading' => 'About you']])
+            ->add('name', null, ['label' => 'Name *', 'constraints' => [new NotBlank()], 'required' => true])
             ->add('telephone_number', null, ['label' => 'Telephone number *', 'constraints' => [new NotBlank()], 'required' => true])
             ->add('email_address', EmailType::class, ['label' => 'Email address *', 'constraints' => [new NotBlank(), new Email()], 'required' => true])
-            ->add('reg_number', null, ['label' => 'Reg number *', 'constraints' => [new NotBlank()], 'attr' => ['heading' => 'About your car']])
+            ->add('reg_number', null, ['label' => 'Reg number *', 'constraints' => [new NotBlank()]])
             ->add('make', null, ['constraints' => [new Length(['max' => 255])], 'required' => true])
             ->add('model', null, ['constraints' => [new Length(['max' => 255])], 'required' => true])
             ->add('mileage', null, ['constraints' => [new Length(['max' => 255])], 'required' => true])

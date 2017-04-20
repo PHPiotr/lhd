@@ -14,9 +14,14 @@
     col-sm-5
 {%- endblock form_group_class %}
 {% block form_row -%}
-    {% if form.vars.attr.heading is defined %}
+    {% if form.vars.name == 'name' %}
         <div class="form-group">
-            <label class="red control-label {{ block('form_label_class') }}">{{ form.vars.attr.heading }}</label>
+            <label class="red control-label {{ block('form_label_class') }}">About you</label>
+        </div>
+    {% endif %}
+    {% if form.vars.name == 'reg_number' %}
+        <div class="form-group">
+            <label class="red control-label {{ block('form_label_class') }}">About your car</label>
         </div>
     {% endif %}
     <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
@@ -27,6 +32,13 @@
         </div>
     </div>
 {%- endblock form_row %}
+{%- block form_widget_compound -%}
+    {%- if form.parent is empty -%}
+        {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+{%- endblock form_widget_compound -%}
 
 {% block body %}
     <div class="exchange">

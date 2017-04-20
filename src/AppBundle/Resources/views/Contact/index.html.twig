@@ -10,6 +10,13 @@
 {% block form_group_class -%}
     col-sm-5
 {%- endblock form_group_class %}
+{%- block form_widget_compound -%}
+    {%- if form.parent is empty -%}
+        {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+{%- endblock form_widget_compound -%}
 
 {% block body %}
     <div class="exchange contact">
