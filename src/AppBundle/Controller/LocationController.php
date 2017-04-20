@@ -27,6 +27,7 @@ class LocationController extends Controller
             'title' => 'LHD Van Centre',
             'postcode' => 'WR10 3NE',
             'form' => $form->createView(),
+            'apiKey' => $this->getParameter('api_key'),
         ];
 
         $form->handleRequest($request);
