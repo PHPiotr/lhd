@@ -78,7 +78,8 @@ class StockController extends Controller
     public function adminEditAction(Request $request, $id)
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null);
-        $car = $this->getDoctrine()->getRepository('AppBundle:Car')->findOneById($id);
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Car');
+        $car = $repo->findOneById($id);
 
         $form = $this->createForm(CarType::class, $car);
         $form->handleRequest($request);
@@ -98,7 +99,17 @@ class StockController extends Controller
             if (true !== $this->addCarPhotosIfNeeded($request, $car, new Filesystem())) {
                 throw new \Exception('File upload failed!');
             }
-            $car->setSlug(Sluggable\Urlizer::urlize($car->getTitle()));
+            $title = $car->getTitle();
+            $slug = Sluggable\Urlizer::urlize($title);
+            $sameSlugCar = $repo->findOneBy(['slug' => $slug]);
+
+            if (null === $repo->findOneBy(['slug' => $slug])) {
+                $car->setSlug(Sluggable\Urlizer::urlize($title));
+            } else if ($sameSlugCar->getId() !== $car->getId()) {
+                $availableSlug = $this->getAvailableSlugForTitle($title);
+                $car->setSlug($availableSlug);
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'Your car was edited!');
@@ -167,7 +178,16 @@ class StockController extends Controller
             return ['form' => $form->createView()];
         }
 
-        $car->setSlug(Sluggable\Urlizer::urlize($car->getTitle()));
+        $title = $car->getTitle();
+        $slug = Sluggable\Urlizer::urlize($title);
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Car');
+        if (null === $repo->findOneBy(['slug' => $slug])) {
+            $car->setSlug(Sluggable\Urlizer::urlize($title));
+        } else {
+            $availableSlug = $this->getAvailableSlugForTitle($title);
+            $car->setSlug($availableSlug);
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($car);
 
@@ -319,6 +339,17 @@ class StockController extends Controller
         } catch (IOException $e) {
             $this->addFlash('warning', $e->getMessage());
         }
+    }
+
+    protected function getAvailableSlugForTitle($title, $index = 0)
+    {
+        $suffix = $index > 0 ? sprintf('-%d', $index) : null;
+        $slug = Sluggable\Urlizer::urlize($title) . $suffix;
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Car');
+        if (null === $repo->findOneBy(['slug' => $slug])) {
+            return $slug;
+        }
+        return $this->getAvailableSlugForTitle($title, $index + 1);
     }
 
 }
