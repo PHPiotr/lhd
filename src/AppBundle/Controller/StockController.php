@@ -18,6 +18,7 @@ class StockController extends Controller
 {
 
     private $carPhotosDirectory = 'bundles/app/img/stock/';
+    private $perPage = 6;
 
     private $specification = [
         'make' => 'make', 'model' => 'model', 'variant' => 'variant', 'firstRegistration' => 'first registration', 'mileage' => 'mileage', 'mot' => 'mot', 'doors' => 'doors', 'seats' => 'seats',
@@ -25,23 +26,27 @@ class StockController extends Controller
         'mpgExtraUrban' => 'mpg extra urban', 'mpgCombined' => 'mpg combined', 'length' => 'length', 'width' => 'width', 'height' => 'height', 'countryOfOrigin' => 'country of origin',
     ];
 
-    /**
-     * @Route("/stock/{page}", name="stock", requirements={"page": "\d+"}, defaults={"page" = 1})
-     * @Template()
-     */
-    public function indexAction($page)
+    protected function getListData($page)
     {
-        $perPage = 6;
         $repo = $this->getDoctrine()->getRepository('AppBundle:Car');
-        $cars = $repo->findBy([], ['isSold' => 'ASC', 'id' => 'DESC'], $perPage, $perPage * ($page - 1));
+        $cars = $repo->findBy([], ['isSold' => 'ASC', 'id' => 'DESC'], $this->perPage, $this->perPage * ($page - 1));
         $countAll = $repo->getCountAll();
-        $pagesCount = $countAll > 0 ? ceil($countAll / $perPage) : 1;
+        $pagesCount = $countAll > 0 ? ceil($countAll / $this->perPage) : 1;
 
         if ($page > $pagesCount) {
             $page = $pagesCount;
         }
 
         return ['cars' => $cars, 'currentPage' => $page, 'pagesCount' => $pagesCount];
+    }
+
+    /**
+     * @Route("/stock/{page}", name="stock", requirements={"page": "\d+"}, defaults={"page" = 1})
+     * @Template()
+     */
+    public function indexAction($page)
+    {
+        return $this->getListData($page);
     }
 
     /**
@@ -62,9 +67,8 @@ class StockController extends Controller
     public function adminListAction($page)
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null);
-        $cars = $this->getDoctrine()->getRepository('AppBundle:Car')->findBy([], ['id' => 'DESC'], 10, 10 * ($page - 1));
 
-        return ['cars' => $cars];
+        return $this->getListData($page);
     }
 
     /**

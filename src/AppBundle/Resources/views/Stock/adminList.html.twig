@@ -2,6 +2,9 @@
 {% block title %}{{ parent() }} - Stock - List{% endblock %}
 {% block body %}
     <div class="stock">
+        <div>
+            {% include 'pagination.html.twig' with {path: 'admin_stock_list', 'pagesCount': pagesCount, 'currentPage': currentPage} %}
+        </div>
         <div class="row">
             {% for car in cars %}
                 <div class="col-sm-4 col-md-4">
@@ -14,6 +17,15 @@
                         {% endfor %}
                         <div class="caption">
                             <h2>{{ car.title | truncate(10, true) }}</h2>
+                            <h5>
+                                {% if car.isSold %}
+                                    <span class="label label-danger">sold</span>
+                                {% elseif car.isReserved %}
+                                    <span class="label label-warning">reserved</span>
+                                {% else %}
+                                    &nbsp;
+                                {% endif %}
+                            </h5>
                             <div class="row">
                                 <div class="col-sm-4 col-md-4">
                                     <a class="btn btn-primary btn-block"
@@ -34,6 +46,9 @@
             {% else %}
                 <h1>Nothing in stock yet</h1>
             {% endfor %}
+        </div>
+        <div>
+            {% include 'pagination.html.twig' with {path: 'admin_stock_list', 'pagesCount': pagesCount, 'currentPage': currentPage} %}
         </div>
     </div>
 {% endblock %}
