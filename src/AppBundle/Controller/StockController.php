@@ -56,6 +56,9 @@ class StockController extends Controller
     public function viewAction($slug)
     {
         $car = $this->getDoctrine()->getRepository('AppBundle:Car')->findOneBy(['slug' => $slug]);
+        if (null === $car) {
+            throw $this->createNotFoundException('This car is not in stock.');
+        }
 
         return ['car' => $car, 'specification' => $this->specification];
     }
@@ -80,6 +83,9 @@ class StockController extends Controller
         $this->denyAccessUnlessGranted('ROLE_USER', null);
         $repo = $this->getDoctrine()->getRepository('AppBundle:Car');
         $car = $repo->findOneById($id);
+        if (null === $car) {
+            throw $this->createNotFoundException('This car is not in stock.');
+        }
 
         $form = $this->createForm(CarType::class, $car);
         $form->handleRequest($request);
@@ -129,7 +135,9 @@ class StockController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null);
         $car = $this->getDoctrine()->getRepository('AppBundle:Car')->findOneById($id);
-
+        if (null === $car) {
+            throw $this->createNotFoundException('This car is not in stock.');
+        }
 
         $form = $this->createForm(CarDeleteType::class);
         $form->handleRequest($request);
