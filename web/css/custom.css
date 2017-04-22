@@ -145,6 +145,11 @@ h2,
     color: #ff0000;
 }
 
+.thumbnail .caption table tr th,
+.thumbnail .caption table tr td {
+    padding: 3px;
+}
+
 h2.sold, h3.sold {
     text-decoration: line-through;
 }
@@ -544,6 +549,12 @@ footer .navbar-default .navbar-nav > .active > a:hover {
     }
 }
 
+@media (max-width: 490px) {
+    .thumbnail .caption table {
+        font-size: 12px;
+    }
+}
+
 @media (max-width: 449px) {
     .red .navbar-text {
         font-size: 10px;
@@ -553,6 +564,7 @@ footer .navbar-default .navbar-nav > .active > a:hover {
         font-size: 10px;
     }
 
+    .thumbnail .caption table,
     .specification .table-bordered > tbody > tr > th,
     .specification .table-bordered > tbody > tr > td {
         font-size: 12px;
@@ -560,5 +572,26 @@ footer .navbar-default .navbar-nav > .active > a:hover {
 
     .location .row #map {
         height: 300px;
+    }
+}
+@media (max-width: 387px) {
+    .thumbnail .caption h3 {
+        text-align: left;
+    }
+    .newest-stock .thumbnail .caption h3 {
+        text-align: center;
+    }
+    .row .col-sm-6 .thumbnail .caption h3 span {
+        display: block;
+    }
+}
+@media (max-width: 330px) {
+    .thumbnail .caption table {
+        font-size: 10px;
+    }
+}
+@media (max-width: 307px) {
+    .red .navbar-text {
+        font-size: 9px;
     }
 }
