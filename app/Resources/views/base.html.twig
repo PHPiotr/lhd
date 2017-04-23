@@ -92,6 +92,7 @@
     {% endfor %}
     {% block body %}{% endblock %}
 </div>
+{% block footer %}
 <footer>
     <nav class="navbar navbar-default menu">
         <div class="container">
@@ -117,6 +118,9 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li{% if app.request.attributes.get('_route') starts with 'sitemap' %} class="active"{% endif %}>
+                        <a href="{{ path('sitemap') }}">Sitemap</a>
+                    </li>
                     <li{% if app.request.attributes.get('_route') starts with 'stock' %} class="active"{% endif %}>
                         <a href="#">Go to top</a>
                     </li>
@@ -125,6 +129,7 @@
         </div>
     </nav>
 </footer>
+{% endblock %}
 {% block javascripts %}
     {% javascripts
     '@AppBundle/Resources/public/js/jquery.js'

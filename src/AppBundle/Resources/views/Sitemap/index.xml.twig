@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>{{ url('centre') }}</loc>
+    </url>
+    {% for page in 1..pagesCount %}
+        <url>
+            <loc>{{ url('stock', {'page': page}) }}</loc>
+        </url>
+    {% endfor %}
+    {% for car in cars %}
+        <url>
+            <loc>{{ url('stock_view', {'slug': car.slug}) }}</loc>
+        </url>
+    {% endfor %}
+    <url>
+        <loc>{{ url('exchange') }}</loc>
+    </url>
+    <url>
+        <loc>{{ url('types') }}</loc>
+    </url>
+    <url>
+        <loc>{{ url('location') }}</loc>
+    </url>
+    <url>
+        <loc>{{ url('contact') }}</loc>
+    </url>
+</urlset>

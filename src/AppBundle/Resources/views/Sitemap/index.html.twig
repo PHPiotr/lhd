@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }} - Sitemap
+{% endblock %}
+{% block body %}
+    <div>
+        <ul class="list-group">
+            <li class="list-group-item"><a href="{{ url('centre') }}" title="LHD Van Centre">Van Centre</a></li>
+            {% for page in 1..pagesCount %}
+                <li class="list-group-item">
+                    <a href="{{ url('stock', {'page': page}) }}" title="Stock - page {{ page }}">Stock - page {{ page }}</a>
+                </li>
+            {% endfor %}
+            {% for car in cars %}
+                <li class="list-group-item">
+                    <a href="{{ url('stock_view', {'slug': car.slug}) }}" title="{{ car.title }}">{{ car.title }}</a>
+                </li>
+            {% endfor %}
+            <li class="list-group-item"><a href="{{ url('exchange') }}" title="Part Exchange">Part Exchange</a></li>
+            <li class="list-group-item"><a href="{{ url('types') }}" title="Van/MPV Types">Van/MPV Types</a></li>
+            <li class="list-group-item"><a href="{{ url('location') }}" title="Location">Location</a></li>
+            <li class="list-group-item"><a href="{{ url('contact') }}" title="Contact">Contact</a></li>
+        </ul>
+    </div>
+{% endblock %}

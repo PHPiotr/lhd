@@ -6,6 +6,14 @@ body {
     border-radius: 0;
 }
 
+.list-group-item a {
+    color: #2e3192;
+}
+
+.list-group-item a:focus, .list-group-item a:hover {
+    color: #ff0000;
+}
+
 .navbar-default.red {
     background-color: #ff0000;
     border-color: #ff0000;
