@@ -65,5 +65,12 @@
         We will fix it as soon as possible. Sorry for any inconvenience caused.
     </p>
 </div>
+{% block javascripts %}
+    {% javascripts
+    '@AppBundle/Resources/public/js/jquery.js'
+    '@AppBundle/Resources/public/js/bootstrap.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
 </body>
 </html>
