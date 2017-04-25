@@ -70,7 +70,9 @@ header .navbar-default .navbar-nav > li > a:hover {
     position: relative;
 }
 
-.stock .thumbnail-inner div.reserved, .stock .thumbnail-inner div.sold {
+.stock .thumbnail-inner div.coming-soon,
+.stock .thumbnail-inner div.reserved,
+.stock .thumbnail-inner div.sold {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -83,6 +85,10 @@ header .navbar-default .navbar-nav > li > a:hover {
 
 .stock .thumbnail-inner div.sold {
     background-color: #ff0000;
+}
+
+.stock .thumbnail-inner div.coming-soon {
+    background-color: #3c763d;
 }
 
 .stock .row.list {
@@ -134,6 +140,10 @@ header .navbar-default .navbar-nav > li > a:hover {
     background: #2e3192;
 }
 
+.stock-view .carousel-caption.coming-soon {
+    background: #3c763d;
+}
+
 .stock-view .carousel-caption p {
     text-transform: uppercase;
 }
@@ -151,6 +161,10 @@ h2,
 .row .col-sm-6 .thumbnail .caption h3,
 .thumbnail .caption table tr th {
     color: #ff0000;
+}
+
+.row .col-sm-6 .thumbnail .caption h3.text-success {
+    color: #3c763d;
 }
 
 .thumbnail .caption table tr th,
@@ -181,11 +195,16 @@ p,
     width: 100%;
 }
 
-.btn-danger {
+.btn-danger, .btn-success {
     background-color: #ff0000;
     border-color: #ff0000;
     border-radius: 0;
     margin-top: 20px;
+}
+
+.btn-success {
+    background-color: #3c763d;
+    border-color: #3c763d;
 }
 
 .stock .thumbnail .caption {

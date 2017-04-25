@@ -22,6 +22,8 @@
                                     <span class="label label-danger">sold</span>
                                 {% elseif car.isReserved %}
                                     <span class="label label-warning">reserved</span>
+                                {% elseif car.isComingSoon %}
+                                    <span class="label label-success">coming soon</span>
                                 {% else %}
                                     &nbsp;
                                 {% endif %}

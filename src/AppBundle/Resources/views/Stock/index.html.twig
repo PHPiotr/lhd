@@ -32,11 +32,13 @@
                             <div class="sold"><strong>Sold</strong></div>
                         {% elseif car.isReserved %}
                             <div class="reserved"><strong>Reserved</strong></div>
+                        {% elseif car.isComingSoon %}
+                            <div class="coming-soon"><strong>Coming soon</strong></div>
                         {% endif %}
                     </div>
                     <div class="caption">
                         <h2>{{ car.title | truncate(25, true) }}</h2>
-                        <h3{% if car.isSold %} class="sold"{% endif %}>Price:
+                        <h3{% if car.isSold %} class="sold"{% elseif car.isComingSoon and car.isReserved == false %} class="text-success"{% endif %}>Price:
                             £{{ car.price|number_format(0, '.', ',') }}</h3>
                         <div class="row">
                             <div class="col-sm-6 col-md-6">
@@ -46,16 +48,16 @@
                                             class="hidden-lg hidden-md hidden-sm">{{ car.mileage }}</span></p>
                                 <p><strong>MOT</strong> <span class="hidden-lg hidden-md hidden-sm">{{ car.mot }}</span>
                                 </p>
-                                <a class="btn btn-danger btn-block"
+                                <a class="btn btn-{% if car.isComingSoon and car.isSold == false and car.isReserved == false %}success{% else %}danger{% endif %} btn-block"
                                    href="{{ path('stock_view', {'slug': car.slug}) }}">See all details</a>
-                                <a class="hidden-lg hidden-md hidden-sm btn btn-danger btn-block"
+                                <a class="hidden-lg hidden-md hidden-sm btn btn-{% if car.isComingSoon and car.isSold == false and car.isReserved == false %}success{% else %}danger{% endif %} btn-block"
                                    href="{{ path('contact') }}">Book appointment</a>
                             </div>
                             <div class="col-sm-6 col-md-6 hidden-xs">
                                 <p>{{ car.firstRegistration }}</p>
                                 <p>{{ car.mileage }}</p>
                                 <p>{{ car.mot }}</p>
-                                <a class="btn btn-danger btn-block" href="{{ path('contact') }}">Book
+                                <a class="btn btn-{% if car.isComingSoon and car.isSold == false and car.isReserved == false %}success{% else %}danger{% endif %} btn-block" href="{{ path('contact') }}">Book
                                     appointment</a>
                             </div>
                         </div>

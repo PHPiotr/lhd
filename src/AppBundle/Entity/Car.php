@@ -56,6 +56,11 @@ class Car
     private $isSold = false;
 
     /**
+     * @ORM\Column(name="is_coming_soon", type="boolean")
+     */
+    private $isComingSoon = false;
+
+    /**
      * @ORM\OneToMany(targetEntity="CarPhoto", mappedBy="car")
      */
     private $carPhotos;
@@ -897,5 +902,29 @@ class Car
     public function getValueForKey($k)
     {
         return !empty($this->$k) ? $this->$k : null;
+    }
+
+    /**
+     * Set isComingSoon
+     *
+     * @param boolean $isComingSoon
+     *
+     * @return Car
+     */
+    public function setIsComingSoon($isComingSoon)
+    {
+        $this->isComingSoon = $isComingSoon;
+
+        return $this;
+    }
+
+    /**
+     * Get isComingSoon
+     *
+     * @return boolean
+     */
+    public function getIsComingSoon()
+    {
+        return $this->isComingSoon;
     }
 }

@@ -26,7 +26,9 @@
                 {% if car.isSold %}
                     {% set state_flag = "<div class=\"carousel-caption sold\"><p><strong>Sold</strong></p></div>" %}
                 {% elseif car.isReserved %}
-                {% set state_flag = "<div class=\"carousel-caption reserved\"><p><strong>Reserved</strong></p></div>" %}
+                    {% set state_flag = "<div class=\"carousel-caption reserved\"><p><strong>Reserved</strong></p></div>" %}
+                {% elseif car.isComingSoon %}
+                    {% set state_flag = "<div class=\"carousel-caption coming-soon\"><p><strong>Coming soon</strong></p></div>" %}
                 {% endif %}
                 {% for photo in car.getCarPhotos() %}
                     <div class="item {% if loop.first %}active{% endif %}">
