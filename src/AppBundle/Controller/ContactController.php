@@ -27,7 +27,7 @@ class ContactController extends Controller
         $form = $this->createFormBuilder()
             ->add('subject', null, ['label' => 'Subject *', 'constraints' => [new NotBlank()], 'required' => true])
             ->add('name', null, ['label' => 'Name *', 'constraints' => [new NotBlank()], 'required' => true])
-            ->add('company', null, ['label' => 'Company *', 'constraints' => [new NotBlank()], 'required' => true])
+            ->add('company', null, ['label' => 'Company'])
             ->add('telephone_number', null, ['label' => 'Telephone number *', 'constraints' => [new NotBlank()], 'required' => true])
             ->add('email_address', EmailType::class, ['label' => 'Email address *', 'constraints' => [new NotBlank(), new Email()], 'required' => true])
             ->add('message', TextareaType::class, ['label' => 'Message *', 'attr' => ['maxlength' => 1000], 'constraints' => [new NotBlank(), new Length(['max' => 1000])]])
