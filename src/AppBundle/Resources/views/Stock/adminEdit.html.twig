@@ -11,3 +11,11 @@
     </div>
     {{ form(form, {'attr': {'action': path('admin_stock_edit', {'id': car.id}), 'novalidate': 'novalidate'}}) }}
 {% endblock %}
+{% block javascripts %}
+    {% javascripts
+    '@AppBundle/Resources/public/js/jquery.js'
+    '@AppBundle/Resources/public/js/bootstrap.js'
+    '@AppBundle/Resources/public/js/admin_stock.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

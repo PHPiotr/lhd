@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -17,9 +18,9 @@ class CarType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('price')
-            ->add('isSold')
-            ->add('isReserved')
-            ->add('isComingSoon')
+            ->add('isSold', CheckboxType::class, ['attr' => ['class' => 'checkbox']])
+            ->add('isReserved', CheckboxType::class, ['attr' => ['class' => 'checkbox']])
+            ->add('isComingSoon', CheckboxType::class, ['attr' => ['class' => 'checkbox']])
             ->add('make')
             ->add('model')
             ->add('variant')

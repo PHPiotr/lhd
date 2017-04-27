@@ -29,7 +29,7 @@ class StockController extends Controller
     protected function getListData($page)
     {
         $repo = $this->getDoctrine()->getRepository('AppBundle:Car');
-        $cars = $repo->findBy([], ['isSold' => 'ASC', 'id' => 'DESC'], $this->perPage, $this->perPage * ($page - 1));
+        $cars = $repo->findBy([], ['isComingSoon' => 'DESC', 'isSold' => 'ASC', 'id' => 'DESC'], $this->perPage, $this->perPage * ($page - 1));
         $countAll = $repo->getCountAll();
         $pagesCount = $countAll > 0 ? ceil($countAll / $this->perPage) : 1;
 

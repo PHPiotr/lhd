@@ -1,5 +1,13 @@
 {% extends 'auth_base.html.twig' %}
 {% block title %}{{ parent() }} - Stock - Add{% endblock %}
-{%  block body %}
+{% block body %}
     {{ form(form, {'attr': {'action': path('admin_stock_add'), 'novalidate': 'novalidate'}}) }}
+{% endblock %}
+{% block javascripts %}
+    {% javascripts
+    '@AppBundle/Resources/public/js/jquery.js'
+    '@AppBundle/Resources/public/js/bootstrap.js'
+    '@AppBundle/Resources/public/js/admin_stock.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
