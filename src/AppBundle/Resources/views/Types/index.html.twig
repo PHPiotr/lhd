@@ -1,57 +1,25 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-    {{ parent() }} - Van/MPV types
+    {{ parent() }} - Transport to Europe
 {% endblock %}
 {% block body %}
     <div class="van-mpv-types">
         <div class="row">
-            <h1>Body types</h1>
-            <h3>A brief view of the Transporter range</h3>
+            <h1>We have specialised vehicle transporter to ship vans to EU.</h1>
+            <p>We deliver vans to France, Spain, Netherlands, Germany, Portugal or virtually any other European country.</p>
+            <p>We offer best door to door prices.</p>
         </div>
         <div class="row">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel-group">
+                <p>Examples:</p>
                 {% for key, type in types %}
-                    {% if loop.first %}
-                        <div class="panel panel-default open">
-                            <div class="panel-heading" role="tab" id="heading-{{ key }}">
-                                <h4 class="panel-title">
-                                    <a role="button" data-toggle="collapse" data-parent="#accordion"
-                                       href="#collapse-{{ key }}" aria-expanded="true"
-                                       aria-controls="collapse-{{ key }}">{{ type.title }}</a>
-                                </h4>
-                            </div>
-                            <div id="collapse-{{ key }}" class="panel-collapse collapse in"
-                                 role="tabpanel"
-                                 aria-labelledby="heading-{{ key }}">
-                                <div class="panel-body">
-                                    {{ type.description | raw }}
-                                    <img src="{{ asset('bundles/app/img/van_mpv_types/'~type.image) }}"
-                                         alt="{{ type.title }}"/>
-                                </div>
-                            </div>
+                    <div class="panel panel-default closed">
+                        <div class="panel-heading" role="tab" id="heading-{{ key }}">
+                            <h4 class="panel-title">
+                                {{ type.title }}
+                            </h4>
                         </div>
-                    {% else %}
-                        <div class="panel panel-default closed">
-                            <div class="panel-heading" role="tab" id="heading-{{ key }}">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-                                       href="#collapse-{{ key }}"
-                                       aria-expanded="false" aria-controls="collapse-{{ key }}">
-                                        {{ type.title }}</a>
-                                </h4>
-                            </div>
-                            <div id="collapse-{{ key }}" class="panel-collapse collapse"
-                                 role="tabpanel"
-                                 aria-labelledby="heading-{{ key }}">
-                                <div class="panel-body">
-                                    {{ type.description | raw }}
-                                    <img src="{{ asset('bundles/app/img/van_mpv_types/'~type.image) }}"
-                                         alt="{{ type.title }}"/>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-
+                    </div>
                 {% endfor %}
             </div>
         </div>
@@ -60,8 +28,7 @@
 {% block javascripts %}
     {% javascripts
     '@AppBundle/Resources/public/js/jquery.js'
-    '@AppBundle/Resources/public/js/bootstrap.js'
-    '@AppBundle/Resources/public/js/types.js' %}
+    '@AppBundle/Resources/public/js/bootstrap.js' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

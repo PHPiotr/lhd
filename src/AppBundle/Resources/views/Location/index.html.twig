@@ -15,8 +15,8 @@
     <div class="location exchange">
         <div class="row">
             <h1>Location</h1>
-            <h3>Heath Park</h3>
-            <p>Main Road, Cropthorne, Pershore, Worcestershire WR10 3NE</p>
+            <!--<h3>Heath Park</h3>-->
+            <p>Essex Way, Hoddesdon, Hertfordshire, EN11 0DU</p>
             {{ form(form) }}
             <div id="directions"></div>
             <div id="map"></div>
@@ -48,7 +48,7 @@
     {{ parent() }}
     <script>
         function initMap() {
-            var hotSpot = {lat: 52.099410, lng: -2.017929};
+            var hotSpot = {lat: 51.760255, lng: 0.003708};
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 16,
                 center: hotSpot,
@@ -62,10 +62,10 @@
             var contentString = '<div><h2 class="gm-title">{{ title }}</h2><address>{{ postcode }}</address></div>';
             var infowindow = new google.maps.InfoWindow({
                 content: contentString,
-                position: {lat: 52.099410, lng: -2.017929}
+                position: {lat: 51.760255, lng: 0.003708}
             });
             infowindow.open(map);
-            map.setCenter(new google.maps.LatLng('52.099410', '-2.017929'));
+            map.setCenter(new google.maps.LatLng('51.760255', '0.003708'));
             var marker = new google.maps.Marker({
                 position: hotSpot,
                 map: map
