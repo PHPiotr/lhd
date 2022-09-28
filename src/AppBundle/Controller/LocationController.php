@@ -25,7 +25,7 @@ class LocationController extends Controller
 
         $data = [
             'title' => 'LHD Van Centre',
-            'postcode' => 'WR10 3NE',
+            'postcode' => 'EN11 0DU',
             'form' => $form->createView(),
             'apiKey' => $this->getParameter('api_key'),
         ];

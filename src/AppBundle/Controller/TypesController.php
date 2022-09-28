@@ -17,27 +17,27 @@ class TypesController extends Controller
     {
         $types = [
             [
-                'title' => 'France - £400',
+                'title' => 'France - £500',
                 'image' => 'panel_van.jpg',
                 'description' => '',
             ],
             [
-                'title' => 'Spain - £500',
+                'title' => 'Spain - £600',
                 'image' => 'half_panel.jpg',
                 'description' => '',
             ],
             [
-                'title' => 'Portugal - £600',
+                'title' => 'Portugal - £700',
                 'image' => 'kombi.jpg',
                 'description' => '',
             ],
             [
-                'title' => 'Netherlands - £300',
+                'title' => 'Netherlands - £400',
                 'image' => 'shuttle.jpg',
                 'description' => '',
             ],
             [
-                'title' => 'Germany - £250',
+                'title' => 'Germany - £350',
                 'image' => 'caravelle.jpg',
                 'description' => '',
             ],
