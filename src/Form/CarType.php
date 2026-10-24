@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\Car;
+
+class CarType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('title')
+            ->add('description')
+            ->add('price')
+            ->add('isSold', CheckboxType::class, ['attr' => ['class' => 'checkbox']])
+            ->add('isReserved', CheckboxType::class, ['attr' => ['class' => 'checkbox']])
+            ->add('isComingSoon', CheckboxType::class, ['attr' => ['class' => 'checkbox']])
+            ->add('make')
+            ->add('model')
+            ->add('variant')
+            ->add('firstRegistration')
+            ->add('mileage')
+            ->add('mot')
+            ->add('doors')
+            ->add('seats')
+            ->add('colour')
+            ->add('body')
+            ->add('fuelType')
+            ->add('transmission')
+            ->add('engineSize')
+            ->add('bhp')
+            ->add('mpgUrban')
+            ->add('mpgExtraUrban')
+            ->add('mpgCombined')
+            ->add('length')
+            ->add('width')
+            ->add('height')
+            ->add('countryOfOrigin')
+            ->add('carPhotos', FileType::class, array(
+                'multiple' => true,
+                'data_class' => null,
+                'mapped' => false,
+            ))
+            ->add('save', SubmitType::class);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults(array(
+            'data_class' => Car::class,
+        ));
+    }
+
+}

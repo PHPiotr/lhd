@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }} - Contact us
+{% endblock %}
+
+{% form_theme form _self %}
+{% block form_label_class -%}
+    col-sm-3
+{%- endblock form_label_class %}
+{% block form_group_class -%}
+    col-sm-5
+{%- endblock form_group_class %}
+{%- block form_widget_compound -%}
+    {%- if form.parent is empty -%}
+        {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+{%- endblock form_widget_compound -%}
+
+{% block body %}
+    <div class="exchange contact">
+        <div class="row">
+            <h1>Contact us</h1>
+        </div>
+        <div class="row">
+            {{ form(form, {'attr': {'action': path('contact'), 'novalidate': 'novalidate'}}) }}
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/app/js/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/contact.js') }}"></script>
+{% endblock %}

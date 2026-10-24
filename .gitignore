@@ -1,20 +1,13 @@
-/.DS_Store
-*.DS_Store
 /.idea
-/app/config/parameters.yml
-/build/
-/phpunit.xml
-/var/*
-!/var/cache
-/var/cache/*
-!var/cache/.gitkeep
-!/var/logs
-/var/logs/*
-!var/logs/.gitkeep
-!/var/sessions
-/var/sessions/*
-!var/sessions/.gitkeep
-!var/SymfonyRequirements.php
+*.DS_Store
+# customer car photos live outside the repo (symlink on the server)
+/public/bundles/app/img/stock
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/var/
 /vendor/
-/web/bundles/
-/src/AppBundle/Resources/public/img/stock
+###< symfony/framework-bundle ###

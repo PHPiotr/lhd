@@ -1,0 +1,43 @@
+security:
+    password_hashers:
+        # existing hashes in the users table are bcrypt, cost 12
+        App\Entity\User:
+            algorithm: bcrypt
+            cost: 12
+
+    providers:
+        db_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+
+    firewalls:
+        dev:
+            # Ensure dev tools and static assets are always allowed
+            pattern: ^/(_profiler|_wdt|css|images|js)/
+            security: false
+        main:
+            lazy: true
+            provider: db_provider
+            user_checker: App\Security\UserChecker
+            form_login:
+                login_path: login
+                check_path: login
+                enable_csrf: true
+                always_use_default_target_path: true
+                default_target_path: /admin
+            logout:
+                path: logout
+                target: /
+
+    # Note: Only the *first* matching rule is applied
+    access_control:
+        - { path: ^/admin, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/, roles: PUBLIC_ACCESS, requires_channel: https }
+
+when@test:
+    security:
+        password_hashers:
+            App\Entity\User:
+                algorithm: bcrypt
+                cost: 4 # Lowest possible value for bcrypt

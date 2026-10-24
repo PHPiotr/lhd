@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }} - Transport to Europe
+{% endblock %}
+{% block body %}
+    <div class="van-mpv-types">
+        <div class="row">
+            <h1>We have specialised vehicle transporter to ship vans to EU.</h1>
+            <p>We deliver vans to France, Spain, Netherlands, Germany, Portugal or virtually any other European country.</p>
+            <p>We offer best door to door prices.</p>
+        </div>
+        <div class="row">
+            <div class="panel-group">
+                <p>Examples:</p>
+                {% for key, type in types %}
+                    <div class="panel panel-default closed">
+                        <div class="panel-heading" role="tab" id="heading-{{ key }}">
+                            <h4 class="panel-title">
+                                {{ type.title }}
+                            </h4>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/app/js/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/bootstrap.js') }}"></script>
+{% endblock %}

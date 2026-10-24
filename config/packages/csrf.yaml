@@ -1,0 +1,3 @@
+# Session-based CSRF tokens: plain HTML forms, no JS needed
+framework:
+    csrf_protection: true
